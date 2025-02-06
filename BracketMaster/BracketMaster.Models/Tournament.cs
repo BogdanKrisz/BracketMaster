@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    public class Tournament
+    public class Tournament : Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public List<Player> Players { get; set; }
         public List<Match> Matches { get; set; }

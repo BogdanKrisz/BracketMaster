@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    public class Player : Entity
+    public interface IEntity<TId>
     {
-        public string Name { get; set; }
+        TId Id { get; set; }
     }
 }
