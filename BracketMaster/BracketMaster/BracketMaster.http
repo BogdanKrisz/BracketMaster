@@ -1,0 +1,6 @@
+@BracketMaster_HostAddress = http://localhost:5190
+
+GET {{BracketMaster_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

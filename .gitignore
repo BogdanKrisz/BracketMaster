@@ -1,0 +1,35 @@
+# Visual Studio mappa és build fájlok
+.vscode/
+.vs/
+bin/
+obj/
+Debug/
+Release/
+
+# User-specifikus fájlok
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE által generált fájlok
+*.cache
+*.pdb
+*.ilk
+*.log
+*.tlog
+*.lastcodeanalysissucceeded
+*.aps
+*.ncb
+*.opendb
+*.VC.db
+*.VC.opendb
+
+# ASP.NET fájlok
+appsettings.Development.json
+node_modules/
+wwwroot/
+publish/
+dist/
+logs/
+secrets/
