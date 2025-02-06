@@ -32,6 +32,15 @@ namespace BracketMaster.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // kapcsolatok
+            modelBuilder.Entity<Tournament>(x => x
+            .HasMany(t => t.Matches)
+            .WithOne(m => m.Tournament)
+            .OnDelete(DeleteBehavior.Cascade));
+
+            modelBuilder.Entity<Tournament>(x => x
+            .HasMany(t => t.Players)
+            .WithOne(p => p.Tournament)
+            .OnDelete(DeleteBehavior.Cascade));
         }
     }
 }
