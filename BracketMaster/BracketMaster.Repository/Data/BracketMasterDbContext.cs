@@ -46,15 +46,15 @@ namespace BracketMaster.Repository
 
             modelBuilder.Entity<Match>(x => x
             .HasOne(m => m.Home)
-            .WithMany(p => p.Matches)
+            .WithMany(p => p.HomeMatches)
             .HasForeignKey(m => m.HomeId)
-            .OnDelete(DeleteBehavior.Cascade));
+            .OnDelete(DeleteBehavior.Restrict));
 
             modelBuilder.Entity<Match>(x => x
             .HasOne(m => m.Away)
-            .WithMany(p => p.Matches)
+            .WithMany(p => p.AwayMatches)
             .HasForeignKey(m => m.AwayId)
-            .OnDelete(DeleteBehavior.Cascade));
+            .OnDelete(DeleteBehavior.Restrict));
         }
     }
 }

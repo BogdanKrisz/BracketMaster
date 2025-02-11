@@ -16,11 +16,15 @@ namespace BracketMaster.Models
         public int TournamentId { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Match> Matches { get; set; }
+        public virtual ICollection<Match> HomeMatches { get; set; }
+
+        [NotMapped]
+        public virtual ICollection<Match> AwayMatches { get; set; }
 
         public Player()
         {
-            Matches = new HashSet<Match>();
+            HomeMatches = new HashSet<Match>();
+            AwayMatches = new HashSet<Match>();
         }
     }
 }

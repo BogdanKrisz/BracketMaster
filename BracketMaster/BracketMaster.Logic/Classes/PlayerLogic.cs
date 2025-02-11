@@ -19,7 +19,7 @@ namespace BracketMaster.Logic
 
         public void Create(Player item)
         {
-            throw new NotImplementedException();
+            pRepo.Create(item);
         }
 
         public void Delete(int id)

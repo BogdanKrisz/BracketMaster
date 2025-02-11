@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.API", "BracketMaster\BracketMaster.API.csproj", "{50BF592F-7D4B-4319-9C68-7CDDA0447B02}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.Repository", "BracketMaster.Repository\BracketMaster.Repository.csproj", "{5014A8AA-EEFD-46A9-B6E3-4F704ADA17CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.Logic", "BracketMaster.Logic\BracketMaster.Logic.csproj", "{82CE222F-BF46-4D37-8C13-37A9BAA64189}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.TestConsole", "BracketMaster.TestConsole\BracketMaster.TestConsole.csproj", "{9C07E8F9-2815-4139-B497-2C5BB19CB92B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{82CE222F-BF46-4D37-8C13-37A9BAA64189}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82CE222F-BF46-4D37-8C13-37A9BAA64189}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82CE222F-BF46-4D37-8C13-37A9BAA64189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
