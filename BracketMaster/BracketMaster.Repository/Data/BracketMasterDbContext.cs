@@ -35,11 +35,25 @@ namespace BracketMaster.Repository
             modelBuilder.Entity<Tournament>(x => x
             .HasMany(t => t.Matches)
             .WithOne(m => m.Tournament)
+            .HasForeignKey(m => m.TournamentId)
             .OnDelete(DeleteBehavior.Cascade));
 
             modelBuilder.Entity<Tournament>(x => x
             .HasMany(t => t.Players)
             .WithOne(p => p.Tournament)
+            .HasForeignKey(p => p.TournamentId)
+            .OnDelete(DeleteBehavior.Cascade));
+
+            modelBuilder.Entity<Match>(x => x
+            .HasOne(m => m.Home)
+            .WithMany(p => p.Matches)
+            .HasForeignKey(m => m.HomeId)
+            .OnDelete(DeleteBehavior.Cascade));
+
+            modelBuilder.Entity<Match>(x => x
+            .HasOne(m => m.Away)
+            .WithMany(p => p.Matches)
+            .HasForeignKey(m => m.AwayId)
             .OnDelete(DeleteBehavior.Cascade));
         }
     }
