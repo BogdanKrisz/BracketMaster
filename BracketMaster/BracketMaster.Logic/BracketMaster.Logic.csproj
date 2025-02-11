@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BracketMaster.Models\BracketMaster.Models.csproj" />
+    <ProjectReference Include="..\BracketMaster.Repository\BracketMaster.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

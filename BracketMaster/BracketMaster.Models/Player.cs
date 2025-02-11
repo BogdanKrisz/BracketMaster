@@ -9,6 +9,8 @@ namespace BracketMaster.Models
     public class Player : Entity
     {
         public string Name { get; set; }
-        public Tournament Tournament { get; set; }
+
+        public int TournamentId { get; set; }
+        public virtual Tournament Tournament { get; set; }
     }
 }
