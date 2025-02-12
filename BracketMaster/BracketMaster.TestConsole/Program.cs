@@ -8,9 +8,10 @@ namespace BracketMaster.TestConsole
         static void Main(string[] args)
         {
             var ctx = new BracketMasterDbContext();
-            var pRepo = new PlayerRepository(ctx);
+            var bpPlayerRepo = new BeerpongPlayerRepository(ctx);
             var playerLogic = new PlayerLogic(pRepo);
             var players = ctx.Players;
+            
         }
     }
 }
