@@ -45,7 +45,7 @@ namespace BracketMaster.Models
             }
         }
 
-        protected BeerpongPlayer()
+        public BeerpongPlayer()
         {
             HomeMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());
             AwayMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());
@@ -107,9 +107,9 @@ namespace BracketMaster.Models
             BeerpongPlayer otherPlayer = other as BeerpongPlayer;
 
             if(this.Points != otherPlayer.Points)
-                return this.Points.CompareTo(otherPlayer.Points);
+                return otherPlayer.Points.CompareTo(this.Points);
 
-            return this.Cups.CompareTo(otherPlayer.Cups);
+            return otherPlayer.Cups.CompareTo(this.Cups);
         }
     }
 }

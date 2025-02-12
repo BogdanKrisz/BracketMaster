@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class MatchLogic : IMatchLogic
+    public abstract class MatchLogic : IMatchLogic
     {
         IRepository<Match> mRepo;
 
@@ -38,6 +38,12 @@ namespace BracketMaster.Logic
         }
 
         public void Update(Match item)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void EnterResult(int homeScore, int awayScore)
         {
             throw new NotImplementedException();
         }

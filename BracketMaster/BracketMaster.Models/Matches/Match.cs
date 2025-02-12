@@ -27,10 +27,26 @@ namespace BracketMaster.Models
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
 
-        public bool IsFinished { get; set; }
+        public virtual bool IsFinished { get; set; }
 
         [NotMapped]
-        public virtual Player Winner { get { return HomeScore > AwayScore ? Home : Away; } }
+        public virtual Player Winner 
+        {
+            get 
+            {
+                if (!IsFinished)
+                    return null;
+                return HomeScore > AwayScore ? Home : Away;
+            } 
+        }
+
         public int WinnerId { get; set; }
+
+        public virtual void SetResult(int homeScore, int awayScore)
+        {
+            this.HomeScore = homeScore;
+            this.AwayScore = awayScore;
+            this.WinnerId = Winner.Id;
+        }
     }
 }

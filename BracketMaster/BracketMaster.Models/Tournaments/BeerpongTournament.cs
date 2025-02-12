@@ -12,6 +12,16 @@ namespace BracketMaster.Models
         public int PointsForOverTimeWin { get; set; }
         public int PointsForOverTimeLose { get; set; }
 
+        public override ICollection<Player> Ranking
+        {
+            get 
+            {
+                List<BeerpongPlayer> bpongResult = Players.OfType<BeerpongPlayer>().ToList();
+                bpongResult.Sort();
+                return bpongResult.Cast<Player>().ToList();
+            }
+        }
+
         public BeerpongTournament()
         {
             Players = new HashSet<Player>(new HashSet<BeerpongPlayer>());

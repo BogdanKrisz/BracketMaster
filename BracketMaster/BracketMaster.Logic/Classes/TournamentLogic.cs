@@ -51,6 +51,11 @@ namespace BracketMaster.Logic
             throw new NotImplementedException();
         }
 
+        public void GenerateNextRound()
+        {
+            throw new NotImplementedException();
+        }
+
         public Tournament Read(int id)
         {
             throw new NotImplementedException();

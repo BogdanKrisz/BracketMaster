@@ -9,5 +9,6 @@ namespace BracketMaster.Logic
 {
     public interface ITournamentLogic : ICrudLogic<Tournament>
     {
+        void GenerateNextRound();
     }
 }

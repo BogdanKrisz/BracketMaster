@@ -9,5 +9,6 @@ namespace BracketMaster.Logic
 {
     public interface IMatchLogic : ICrudLogic<Match>
     {
+        void EnterResult(int homeScore, int awayScore);
     }
 }

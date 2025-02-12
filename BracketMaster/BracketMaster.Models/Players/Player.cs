@@ -24,9 +24,27 @@ namespace BracketMaster.Models
         [NotMapped]
         public abstract int Points { get; }
 
+        [NotMapped]
+        public ICollection<Player> PreviousOpponents 
+        { 
+            get 
+            { 
+                ICollection<Player> opponents = new List<Player>();
+                foreach (Match match in HomeMatches)
+                {
+                    opponents.Add(match.Away);
+                }
+                foreach (Match match in AwayMatches)
+                {
+                    opponents.Add(match.Home);
+                }
+                return opponents;
+            } 
+        }
+
         public abstract int CompareTo(Player? other);
 
-        protected Player()
+        public Player()
         {
             HomeMatches = new HashSet<Match>();
             AwayMatches = new HashSet<Match>();

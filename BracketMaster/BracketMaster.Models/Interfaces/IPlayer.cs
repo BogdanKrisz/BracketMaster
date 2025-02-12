@@ -2,7 +2,7 @@
 
 namespace BracketMaster.Models
 {
-    public interface IPlayer : IEntity<int>
+    public interface IPlayer : IEntity<int>, IComparable<Player>
     {
         string Name { get; set; }
 
@@ -11,9 +11,8 @@ namespace BracketMaster.Models
 
         ICollection<Match> HomeMatches { get; set; }
         ICollection<Match> AwayMatches { get; set; }
+        ICollection<Player> PreviousOpponents { get; }
 
         int Points { get; }
-
-        int CompareTo(Player? other);
     }
 }

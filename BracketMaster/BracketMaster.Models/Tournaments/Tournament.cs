@@ -20,6 +20,9 @@ namespace BracketMaster.Models
         [NotMapped]
         public virtual ICollection<Match> Matches { get; set; }
 
+        [NotMapped]
+        public abstract ICollection<Player> Ranking { get; }
+
         public PrelimineryType PrelimineryType { get; set; }
 
         public KnockoutType KnockoutType { get; set; }

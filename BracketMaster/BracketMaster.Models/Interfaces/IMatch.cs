@@ -20,5 +20,7 @@
 
         Player Winner { get; }
         int WinnerId { get; set; }
+
+        void SetResult(int homeScore, int awayScore);
     }
 }
