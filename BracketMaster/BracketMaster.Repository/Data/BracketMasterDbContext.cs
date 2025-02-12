@@ -10,9 +10,9 @@ namespace BracketMaster.Repository
 {
     public class BracketMasterDbContext : DbContext
     {
-        public DbSet<Player> Players { get; set; }
-        public DbSet<Match> Matches { get; set; }
-        public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<BeerpongPlayer> Players { get; set; }
+        public DbSet<BeerpongMatch> Matches { get; set; }
+        public DbSet<BeerpongTournament> Tournaments { get; set; }
 
         public BracketMasterDbContext()
         {

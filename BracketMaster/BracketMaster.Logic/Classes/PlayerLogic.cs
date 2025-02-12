@@ -29,7 +29,7 @@ namespace BracketMaster.Logic
 
         public Player Read(int id)
         {
-            throw new NotImplementedException();
+            return pRepo.Read(id);
         }
 
         public IQueryable<Player> ReadAll()
@@ -41,5 +41,10 @@ namespace BracketMaster.Logic
         {
             throw new NotImplementedException();
         }
+
+        // pont számítás
+        // pohár számítás
+        // két player összehasonlítása ezek alapján
+        
     }
 }

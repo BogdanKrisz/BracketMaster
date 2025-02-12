@@ -11,7 +11,6 @@ namespace BracketMaster.TestConsole
             var pRepo = new PlayerRepository(ctx);
             var playerLogic = new PlayerLogic(pRepo);
             var players = ctx.Players;
-            playerLogic.Create(new Models.Player() { Name = "Krisz", } );
         }
     }
 }

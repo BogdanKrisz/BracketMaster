@@ -8,6 +8,30 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
+    // Fajták
+    // lehessen kiválasztani, hogy hány preliminery kör legyen
+
+    // RoundRobin
+    // Swiss-system -> ismétlések kerülése, ha lehetséges
+    // Random enemy -> ismétlések kerülése, ha lehetséges
+    // battle royale
+
+    // egyenes kiesés
+    // single elimination
+    // double elimination
+
+        // Seedelési lehetőségek
+        // 1-8, 2-7 ...
+        // random
+        // nem tudom mik vannak még
+
+
+    // Új kör sorsolása
+    // Meccsek leadása
+    // Pontszámok számítása / nyilvántartása (Minden playernek kellene erre metódus, amely kiszámolja a saját pont/pohár arányát)
+    // lehetőség új körre / Knockout Stage indításra
+
+    // points for win / draw / lose
     public class TournamentLogic : ITournamentLogic
     {
         IRepository<Tournament> tRepo;
