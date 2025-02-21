@@ -17,35 +17,35 @@ namespace BracketMaster.Logic
             this.mRepo = matchRepo;
         }
 
-        public void Create(Match item)
+        public virtual void Create(Match item)
         {
-            throw new NotImplementedException();
+            mRepo.Create(item);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            mRepo.Delete(id);
         }
 
         public Match Read(int id)
         {
-            throw new NotImplementedException();
+            return mRepo.Read(id);
         }
 
         public IQueryable<Match> ReadAll()
         {
-            throw new NotImplementedException();
+            return mRepo.ReadAll();
         }
 
-        public void Update(Match item)
+        public virtual void Update(Match item)
         {
-            throw new NotImplementedException();
+            mRepo.Update(item);
         }
 
-
-        public void EnterResult(int homeScore, int awayScore)
+        public virtual void EnterResult(Match item, int homeScore, int awayScore)
         {
-            throw new NotImplementedException();
+            item.SetResult(homeScore, awayScore);
+            Update(item);
         }
     }
 }

@@ -12,7 +12,9 @@ namespace BracketMaster.Models
         int PointsForLose { get; set; }
         int PointsForWin { get; set; }
 
-        PrelimineryType PrelimineryType { get; set; }
+        IPreliminarySystem PrelimineryType { get; set; }
         KnockoutType KnockoutType { get; set; }
+
+        int PlayersToElimination { get; set; }
     }
 }

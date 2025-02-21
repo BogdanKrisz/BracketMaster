@@ -32,28 +32,13 @@ namespace BracketMaster.Logic
     // lehetőség új körre / Knockout Stage indításra
 
     // points for win / draw / lose
-    public class TournamentLogic : ITournamentLogic
+    public abstract class TournamentLogic : ITournamentLogic
     {
         IRepository<Tournament> tRepo;
 
         public TournamentLogic(IRepository<Tournament> tournamentRepo)
         {
             this.tRepo = tournamentRepo;
-        }
-
-        public void Create(Tournament item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GenerateNextRound()
-        {
-            throw new NotImplementedException();
         }
 
         public Tournament Read(int id)
@@ -66,9 +51,21 @@ namespace BracketMaster.Logic
             throw new NotImplementedException();
         }
 
-        public void Update(Tournament item)
+        public virtual void Create(Tournament item)
         {
             throw new NotImplementedException();
         }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Update(Tournament item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public abstract void GenerateNextRound();
     }
 }

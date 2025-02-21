@@ -44,10 +44,10 @@ namespace BracketMaster.Models
 
         public abstract int CompareTo(Player? other);
 
-        public Player()
+        protected Player(string name, int tournamentId)
         {
-            HomeMatches = new HashSet<Match>();
-            AwayMatches = new HashSet<Match>();
+            Name = name;
+            TournamentId = tournamentId;
         }
     }
 }

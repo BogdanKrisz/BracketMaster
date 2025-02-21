@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    public enum PrelimineryType { RoundRobin, Swiss, Random }
+    public enum PrelimineryType { RoundRobin, Swiss, RandomEnemy, Groups }
     public enum KnockoutType { Single, Double, Triple, None }
 
     public abstract class Tournament : Entity, ITournament
@@ -23,17 +23,47 @@ namespace BracketMaster.Models
         [NotMapped]
         public abstract ICollection<Player> Ranking { get; }
 
-        public PrelimineryType PrelimineryType { get; set; }
+        public IPreliminarySystem PrelimineryType { get; set; }
 
         public KnockoutType KnockoutType { get; set; }
+
+        public int PlayersToElimination { get; set; }
 
         public int PointsForWin { get; set; }
         public int PointsForLose { get; set; }
 
-        protected Tournament()
+        protected Tournament(string name, IPreliminarySystem preType, KnockoutType knockoutType, int playersToElimination)
         {
-            Players = new HashSet<Player>();
-            Matches = new HashSet<Match>();
+            Name = name;
+            PrelimineryType = preType;
+            KnockoutType = knockoutType;
+            PlayersToElimination = playersToElimination;
+        }
+
+        // Nem biztos még hogy ide kell kerüljenek az alábbi metódusok
+        public virtual void AddPlayer(Player player)
+        {
+            //
+        }
+
+        public virtual void RemovePlayer(int playerId)
+        {
+            //
+        }
+
+        public virtual void GenerateMatches()
+        {
+            //
+        }
+
+        public virtual void StartTournament()
+        {
+            //
+        }
+
+        public virtual void StartElimination()
+        {
+            //
         }
     }
 }

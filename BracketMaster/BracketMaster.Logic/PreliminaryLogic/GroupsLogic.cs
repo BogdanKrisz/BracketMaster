@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BracketMaster.Logic
+namespace BracketMaster.Logic.PreliminaryLogic
 {
-    internal class DoubleEleminationLogic
+    internal class GroupsLogic
     {
     }
 }

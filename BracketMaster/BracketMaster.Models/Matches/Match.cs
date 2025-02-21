@@ -13,7 +13,7 @@ namespace BracketMaster.Models
         public virtual Tournament Tournament { get; set; }
         public int TournamentId { get; set; }
 
-        // number of round in the preliminery stages
+        // number of round 
         public int Round { get; set; }
 
         [NotMapped]
@@ -41,6 +41,14 @@ namespace BracketMaster.Models
         }
 
         public int WinnerId { get; set; }
+
+        protected Match(int tournamentId, int homeId, int awayId, int round)
+        {
+            TournamentId = tournamentId;
+            HomeId = homeId;
+            AwayId = awayId;
+            Round = round;
+        }
 
         public virtual void SetResult(int homeScore, int awayScore)
         {

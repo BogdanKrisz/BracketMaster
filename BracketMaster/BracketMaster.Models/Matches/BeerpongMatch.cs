@@ -13,5 +13,10 @@ namespace BracketMaster.Models
         public bool IsOverTime { get { return HomeScore >= 10 && AwayScore >= 10; } }
 
         public int CupDifference { get { return Math.Abs(HomeScore - AwayScore); } }
+
+        public BeerpongMatch(int tournamentId, int homeId, int awayId, int round) : base(tournamentId, homeId, awayId, round)
+        {
+        }
+
     }
 }

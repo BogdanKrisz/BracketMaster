@@ -45,7 +45,7 @@ namespace BracketMaster.Models
             }
         }
 
-        public BeerpongPlayer()
+        public BeerpongPlayer(string name, int tournamentId) : base(name, tournamentId)
         {
             HomeMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());
             AwayMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());

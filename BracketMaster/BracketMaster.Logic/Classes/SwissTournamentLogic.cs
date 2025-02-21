@@ -8,44 +8,27 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic.Classes
 {
-    public class SwissTournamentLogic : ITournamentLogic
+    public class SwissTournamentLogic : TournamentLogic, ITournamentLogic
     {
-        IRepository<Tournament> tRepo;
         IRepository<Player> pRepo;
 
         public SwissTournamentLogic(IRepository<Tournament> tournamentRepo, IRepository<Player> playerRepo)
+            : base(tournamentRepo)
         {
-            this.tRepo = tournamentRepo;
             this.pRepo = playerRepo;
         }
 
-        public void Create(Tournament item)
+        public override void GenerateNextRound()
         {
-            throw new NotImplementedException();
-        }
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+            // Arra figyelj ! -> hogy olyan játékos ne legyen ellenfél, aki már játszik valakivel a most éppen generálás allti körben
+            // Arra is figyeljünk, hogy ne maradjon ki valaki 2x, szóval páratlan enemynél ha valaki kimarad, utána addig ne maradjon ki, amíg nem lesz mindenki ugyanannyi meccsszámon
+            // Nem dob össze ugyanazzal az ellenféllel, ha még van akivel nem játszott
 
-        public void GenerateNextRound()
-        {
-            throw new NotImplementedException();
-        }
+            // Ha már mindenkivel játszott az illető 1szer, akkor az eredeti ellenfelével jöhet
 
-        public Tournament Read(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public IQueryable<Tournament> ReadAll()
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Update(Tournament item)
-        {
             throw new NotImplementedException();
         }
     }

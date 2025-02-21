@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BracketMaster.Logic
+namespace BracketMaster.Models
 {
-    internal class DoubleEleminationLogic
+    public class Swiss : PreliminarySystem
     {
     }
 }

@@ -1,12 +1,22 @@
-﻿using System;
+﻿using BracketMaster.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BracketMaster.Logic.KnockoutLogic
+namespace BracketMaster.Logic
 {
-    internal class SingleEleminationLogic
+    public class SingleEleminationLogic
     {
+        List<Player> Players;
+
+        public SingleEleminationLogic(List<Player> players)
+        {
+            Players = players;
+        }
+
+        // megnézzük az összes playert, azt hogy hol helyezkednek el és meccseket csinálunk nekik
+
     }
 }
