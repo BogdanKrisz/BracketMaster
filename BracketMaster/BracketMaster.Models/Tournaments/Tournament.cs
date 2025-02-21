@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    public enum PrelimineryType { RoundRobin, Swiss, RandomEnemy, Groups }
-    public enum KnockoutType { Single, Double, Triple, None }
-
     public abstract class Tournament : Entity, ITournament
     {
         public string Name { get; set; }
@@ -24,15 +21,14 @@ namespace BracketMaster.Models
         public abstract ICollection<Player> Ranking { get; }
 
         public IPreliminarySystem PrelimineryType { get; set; }
-
-        public KnockoutType KnockoutType { get; set; }
+        public IKnockoutSystem KnockoutType { get; set; }
 
         public int PlayersToElimination { get; set; }
 
         public int PointsForWin { get; set; }
         public int PointsForLose { get; set; }
 
-        protected Tournament(string name, IPreliminarySystem preType, KnockoutType knockoutType, int playersToElimination)
+        protected Tournament(string name, IPreliminarySystem preType, IKnockoutSystem knockoutType, int playersToElimination)
         {
             Name = name;
             PrelimineryType = preType;
