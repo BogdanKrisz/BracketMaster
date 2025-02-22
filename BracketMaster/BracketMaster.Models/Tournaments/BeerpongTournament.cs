@@ -22,7 +22,8 @@ namespace BracketMaster.Models
             }
         }
 
-        public BeerpongTournament()
+        public BeerpongTournament(string name, IPreliminarySystem preType, IKnockoutSystem knockoutType, int playersToElimination) 
+            : base(name, preType, knockoutType, playersToElimination)
         {
             Players = new HashSet<Player>(new HashSet<BeerpongPlayer>());
             Matches = new HashSet<Match>(new HashSet<BeerpongMatch>());

@@ -35,31 +35,5 @@ namespace BracketMaster.Models
             KnockoutType = knockoutType;
             PlayersToElimination = playersToElimination;
         }
-
-        // Nem biztos még hogy ide kell kerüljenek az alábbi metódusok
-        public virtual void AddPlayer(Player player)
-        {
-            //
-        }
-
-        public virtual void RemovePlayer(int playerId)
-        {
-            //
-        }
-
-        public virtual void GenerateMatches()
-        {
-            //
-        }
-
-        public virtual void StartTournament()
-        {
-            //
-        }
-
-        public virtual void StartElimination()
-        {
-            //
-        }
     }
 }
