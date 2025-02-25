@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BracketMaster.Logic.PreliminaryLogic
+namespace BracketMaster.Logic
 {
-    internal class RandomEnemyLogic
+    public class RandomEnemyLogic
     {
     }
 }

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    public class KnockoutSystem : IKnockoutSystem
+    public abstract class KnockoutSystem : IKnockoutSystem
     {
+        public ICollection<Player> Players { get; set; }
+        public ICollection<Match> Matches { get; set; }
     }
 }

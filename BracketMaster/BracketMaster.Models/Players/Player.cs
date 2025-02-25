@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
+    [Table("Players")]
     public abstract class Player : Entity, IPlayer
     {
         public string Name { get; set; }

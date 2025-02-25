@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
+    [Table("Players_Beerpong")]
     public class BeerpongPlayer : Player, IBeerpongPlayer
     {
         public override int Points 

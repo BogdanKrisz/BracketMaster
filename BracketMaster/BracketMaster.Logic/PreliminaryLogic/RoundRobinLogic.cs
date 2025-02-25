@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    internal class RoundRobinLogic
+    public class RoundRobinLogic
     {
     }
 }

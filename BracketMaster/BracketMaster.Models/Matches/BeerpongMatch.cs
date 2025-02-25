@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
+    [Table("Matches_Beerpong")]
     public class BeerpongMatch : Match, IBeerpongMatch
     {
         public override bool IsFinished { get { return HomeScore >= 10 || AwayScore >= 10; } }

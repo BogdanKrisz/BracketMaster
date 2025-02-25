@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
+    [Table("Matches")]
     public abstract class Match : Entity, IMatch
     {
         [NotMapped]

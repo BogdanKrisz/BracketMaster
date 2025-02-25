@@ -1,4 +1,5 @@
 ﻿using BracketMaster.Models;
+using BracketMaster.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public interface IMatchLogic : ICrudLogic<Match>
+    public class BeerpongTournamentLogic
     {
-        void EnterResult(Match item, int homeScore, int awayScore);
+        
     }
 }

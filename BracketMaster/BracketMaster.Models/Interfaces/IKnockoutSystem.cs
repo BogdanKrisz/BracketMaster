@@ -8,5 +8,7 @@ namespace BracketMaster.Models
 {
     public interface IKnockoutSystem
     {
+        ICollection<Player> Players { get; set; }
+        ICollection<Match> Matches { get; set; }
     }
 }

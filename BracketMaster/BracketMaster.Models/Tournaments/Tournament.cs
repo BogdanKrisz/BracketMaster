@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
+    [Table("Tournaments")]
     public abstract class Tournament : Entity, ITournament
     {
         public string Name { get; set; }
@@ -20,7 +21,7 @@ namespace BracketMaster.Models
         [NotMapped]
         public abstract ICollection<Player> Ranking { get; }
 
-        public IPreliminarySystem PrelimineryType { get; set; }
+        public IPreliminarySystem PreliminaryType { get; set; }
         public IKnockoutSystem KnockoutType { get; set; }
 
         public int PlayersToElimination { get; set; }
@@ -31,7 +32,7 @@ namespace BracketMaster.Models
         protected Tournament(string name, IPreliminarySystem preType, IKnockoutSystem knockoutType, int playersToElimination)
         {
             Name = name;
-            PrelimineryType = preType;
+            PreliminaryType = preType;
             KnockoutType = knockoutType;
             PlayersToElimination = playersToElimination;
         }

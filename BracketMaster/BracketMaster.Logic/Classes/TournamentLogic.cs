@@ -8,23 +8,6 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    // Fajták
-    // lehessen kiválasztani, hogy hány preliminery kör legyen
-
-    // RoundRobin
-    // Swiss-system -> ismétlések kerülése, ha lehetséges
-    // Random enemy -> ismétlések kerülése, ha lehetséges
-    // battle royale
-
-    // egyenes kiesés
-    // single elimination
-    // double elimination
-
-        // Seedelési lehetőségek
-        // 1-8, 2-7 ...
-        // random
-        // nem tudom mik vannak még
-
 
     // Új kör sorsolása
     // Meccsek leadása
@@ -32,40 +15,87 @@ namespace BracketMaster.Logic
     // lehetőség új körre / Knockout Stage indításra
 
     // points for win / draw / lose
-    public abstract class TournamentLogic : ITournamentLogic
-    {
-        IRepository<Tournament> tRepo;
 
-        public TournamentLogic(IRepository<Tournament> tournamentRepo)
+
+    // create tournament -> sport választás -> lebony választás
+    // kellene egy ilyen tournament készítő logika és onnan az adott lebonyra vezetni
+    // tournamentLogic -> swiss/random/roundRobin/groups -> KO
+
+    public abstract class TournamentLogic<T> : ITournamentLogic<T> where T : Tournament
+    {
+        IRepository<T> tRepo;
+
+        public TournamentLogic(IRepository<T> tournamentRepo)
         {
             this.tRepo = tournamentRepo;
         }
 
-        public Tournament Read(int id)
+        public virtual void Create(T item)
         {
-            throw new NotImplementedException();
-        }
+            if (item == null) throw new ArgumentNullException($"Tournament is null!");
+            if (item.Name.Length < 3) throw new ArgumentException($"'{item.Name}' for tournament name is too short!");
+            if (item.KnockoutType == null) throw new ArgumentNullException("Knockout type can't be empty!");
+            if (item.PreliminaryType == null) throw new ArgumentNullException("Preliminary type can't be empty!");
+            if (item.PointsForWin <= 0) throw new ArgumentException("Points for win can't be lower than 1!");
+            if (item.PointsForLose >= item.PointsForWin) throw new ArgumentException("Points for lose has to be lower than points for win!");
 
-        public IQueryable<Tournament> ReadAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Create(Tournament item)
-        {
-            throw new NotImplementedException();
+            tRepo.Create(item);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            if (this.Read(id) == null) throw new ArgumentNullException($"Tournament doesn't exist!");
+
+            tRepo.Delete(id);
         }
 
-        public virtual void Update(Tournament item)
+        public T Read(int id)
+        {
+            return tRepo.Read(id);
+        }
+
+        public IQueryable<T> ReadAll()
+        {
+            return tRepo.ReadAll();
+        }
+
+        public virtual void Update(T item)
+        {
+            if (item == null) throw new ArgumentNullException($"Tournament is null.");
+            if (item.Name.Length < 3) throw new ArgumentException($"'{item.Name}' for tournament name is too short!");
+            if (item.PlayersToElimination < 0) throw new ArgumentException("Negative amount of players can't go to elimination!");
+            if (item.KnockoutType == null) throw new ArgumentNullException("Knockout type can't be empty!");
+            if (item.PreliminaryType == null) throw new ArgumentNullException("Preliminary type can't be empty!");
+            if (item.PointsForWin <= 0) throw new ArgumentException("Points for win can't be lower than 1!");
+            if (item.PointsForLose >= item.PointsForWin) throw new ArgumentException("Points for lose has to be lower than points for win!");
+
+            tRepo.Update(item);
+        }
+
+        // NON CRUD
+
+        public void StartNextRound(Tournament t)
+        {
+            switch (t.PreliminaryType)
+            {
+                case RoundRobin:
+                    Console.WriteLine("Round Robin next round!");
+                    break;
+                case Groups:
+                    Console.WriteLine("Groups next round!");
+                    break;
+                case RandomEnemies:
+                    Console.WriteLine("Random enemies next round!");
+                    break;
+                case Swiss:
+                    Console.WriteLine("Swiss next round!");
+                    break;
+            }
+        }
+
+        public void StartElimination()
         {
             throw new NotImplementedException();
         }
-
-        public abstract void GenerateNextRound();
     }
 }

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public interface ITournamentLogic : ICrudLogic<Tournament>
+    public interface ITournamentLogic<T> : IBaseLogic<T> where T : Tournament
     {
-        void GenerateNextRound();
+        void StartNextRound();
+        void StartElimination();
     }
 }

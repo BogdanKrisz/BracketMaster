@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public interface IPlayerLogic : ICrudLogic<Player>
+    public interface IPlayerLogic<T> : IBaseLogic<T> where T : Player
     {
+
     }
 }
