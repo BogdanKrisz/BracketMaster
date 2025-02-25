@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class PlayerLogic : IPlayerLogic
+    public class PlayerLogic
     {
         IRepository<Player> pRepo;
 

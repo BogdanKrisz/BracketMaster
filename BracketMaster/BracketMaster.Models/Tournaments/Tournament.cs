@@ -21,19 +21,29 @@ namespace BracketMaster.Models
         [NotMapped]
         public abstract ICollection<Player> Ranking { get; }
 
-        public IPreliminarySystem PreliminaryType { get; set; }
-        public IKnockoutSystem KnockoutType { get; set; }
+        [NotMapped]
+        public virtual PreliminarySystem PreliminarySystem { get; set; }
+        public int PreliminarySystemId { get; set; }
+ 
+        [NotMapped]
+        public virtual KnockoutSystem KnockoutSystem { get; set; }
+        public int KnockoutSystemId { get; set; }
 
         public int PlayersToElimination { get; set; }
 
         public int PointsForWin { get; set; }
         public int PointsForLose { get; set; }
 
-        protected Tournament(string name, IPreliminarySystem preType, IKnockoutSystem knockoutType, int playersToElimination)
+        protected Tournament()
+        {
+            
+        }
+
+        protected Tournament(string name, int preliminaryId, int knockoutId, int playersToElimination)
         {
             Name = name;
-            PreliminaryType = preType;
-            KnockoutType = knockoutType;
+            PreliminarySystemId = preliminaryId;
+            KnockoutSystemId = knockoutId;
             PlayersToElimination = playersToElimination;
         }
     }

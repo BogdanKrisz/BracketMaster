@@ -1,5 +1,4 @@
-﻿using BracketMaster.Logic.Interfaces;
-using BracketMaster.Models;
+﻿using BracketMaster.Models;
 using BracketMaster.Repository;
 using System;
 using System.Collections.Generic;

@@ -12,8 +12,8 @@ namespace BracketMaster.Models
         int PointsForLose { get; set; }
         int PointsForWin { get; set; }
 
-        IPreliminarySystem PreliminaryType { get; set; }
-        IKnockoutSystem KnockoutType { get; set; }
+        int PreliminarySystemId { get; set; }
+        int KnockoutSystemId { get; set; }
 
         int PlayersToElimination { get; set; }
     }

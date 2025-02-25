@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public abstract class MatchLogic : IMatchLogic
+    public abstract class MatchLogic
     {
         IRepository<Match> mRepo;
 

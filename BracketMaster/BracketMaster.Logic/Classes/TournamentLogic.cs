@@ -34,8 +34,8 @@ namespace BracketMaster.Logic
         {
             if (item == null) throw new ArgumentNullException($"Tournament is null!");
             if (item.Name.Length < 3) throw new ArgumentException($"'{item.Name}' for tournament name is too short!");
-            if (item.KnockoutType == null) throw new ArgumentNullException("Knockout type can't be empty!");
-            if (item.PreliminaryType == null) throw new ArgumentNullException("Preliminary type can't be empty!");
+            if (item.KnockoutSystem == null) throw new ArgumentNullException("Knockout type can't be empty!");
+            if (item.PreliminarySystem == null) throw new ArgumentNullException("Preliminary type can't be empty!");
             if (item.PointsForWin <= 0) throw new ArgumentException("Points for win can't be lower than 1!");
             if (item.PointsForLose >= item.PointsForWin) throw new ArgumentException("Points for lose has to be lower than points for win!");
 
@@ -64,8 +64,8 @@ namespace BracketMaster.Logic
             if (item == null) throw new ArgumentNullException($"Tournament is null.");
             if (item.Name.Length < 3) throw new ArgumentException($"'{item.Name}' for tournament name is too short!");
             if (item.PlayersToElimination < 0) throw new ArgumentException("Negative amount of players can't go to elimination!");
-            if (item.KnockoutType == null) throw new ArgumentNullException("Knockout type can't be empty!");
-            if (item.PreliminaryType == null) throw new ArgumentNullException("Preliminary type can't be empty!");
+            if (item.KnockoutSystem == null) throw new ArgumentNullException("Knockout type can't be empty!");
+            if (item.PreliminarySystem == null) throw new ArgumentNullException("Preliminary type can't be empty!");
             if (item.PointsForWin <= 0) throw new ArgumentException("Points for win can't be lower than 1!");
             if (item.PointsForLose >= item.PointsForWin) throw new ArgumentException("Points for lose has to be lower than points for win!");
 
@@ -76,18 +76,18 @@ namespace BracketMaster.Logic
 
         public void StartNextRound(Tournament t)
         {
-            switch (t.PreliminaryType)
+            switch (t.PreliminarySystem.Name)
             {
-                case RoundRobin:
+                case "RoundRobin":
                     Console.WriteLine("Round Robin next round!");
                     break;
-                case Groups:
+                case "Groups":
                     Console.WriteLine("Groups next round!");
                     break;
-                case RandomEnemies:
+                case "Random":
                     Console.WriteLine("Random enemies next round!");
                     break;
-                case Swiss:
+                case "Swiss":
                     Console.WriteLine("Swiss next round!");
                     break;
             }

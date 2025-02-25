@@ -10,6 +10,9 @@ namespace BracketMaster.Repository
 {
     public class BracketMasterDbContext : DbContext
     {
+        public DbSet<PreliminarySystem> PreliminarySystems { get; set; }
+        public DbSet<KnockoutSystem> KnockoutSystems { get; set; }
+
         public DbSet<BeerpongPlayer> BeerpongPlayers { get; set; }
         public DbSet<BeerpongMatch> BeerpongMatches { get; set; }
         public DbSet<BeerpongTournament> BeerpongTournaments { get; set; }
@@ -32,6 +35,19 @@ namespace BracketMaster.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // kapcsolatok
+
+            modelBuilder.Entity<Tournament>()
+            .HasOne(t => t.KnockoutSystem)
+            .WithMany()                         // Ha egy KnockoutSystem-et több torna is használhat
+            .HasForeignKey(t => t.KnockoutSystemId)
+            .OnDelete(DeleteBehavior.Restrict); // Ne törölje a KnockoutSystem-et, ha van rá hivatkozás
+
+            modelBuilder.Entity<Tournament>()
+            .HasOne(t => t.PreliminarySystem)
+            .WithMany()                         
+            .HasForeignKey(t => t.PreliminarySystemId)
+            .OnDelete(DeleteBehavior.Restrict); 
+
             modelBuilder.Entity<Tournament>(x => x
             .HasMany(t => t.Matches)
             .WithOne(m => m.Tournament)
