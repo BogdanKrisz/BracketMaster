@@ -45,6 +45,11 @@ namespace BracketMaster.Models
 
         public abstract int CompareTo(Player? other);
 
+        protected Player()
+        {
+
+        }
+
         protected Player(string name, int tournamentId)
         {
             Name = name;

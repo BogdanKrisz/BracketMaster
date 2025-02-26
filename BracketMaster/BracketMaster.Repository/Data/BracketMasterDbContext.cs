@@ -1,4 +1,5 @@
 ﻿using BracketMaster.Models;
+using BracketMaster.Models.Tournament_Player;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace BracketMaster.Repository
 {
     public class BracketMasterDbContext : DbContext
     {
+        public DbSet<BeerpongTournament_BeerpongPlayer> BeerpongTournaments_BeerpongPlayers { get; set; }
+
         public DbSet<PreliminarySystem> PreliminarySystems { get; set; }
         public DbSet<KnockoutSystem> KnockoutSystems { get; set; }
 

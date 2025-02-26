@@ -78,17 +78,17 @@ namespace BracketMaster.Logic
         {
             switch (t.PreliminarySystem.Name)
             {
-                case "RoundRobin":
-                    Console.WriteLine("Round Robin next round!");
-                    break;
                 case "Groups":
                     Console.WriteLine("Groups next round!");
                     break;
                 case "Random":
-                    Console.WriteLine("Random enemies next round!");
+                    Console.WriteLine("Random next round!");
                     break;
                 case "Swiss":
                     Console.WriteLine("Swiss next round!");
+                    break;
+                case "Robin":
+                    Console.WriteLine("Round Robin next round!");
                     break;
             }
         }
@@ -96,6 +96,15 @@ namespace BracketMaster.Logic
         public void StartElimination()
         {
             throw new NotImplementedException();
+        }
+
+        public void AddPlayer(int tournamentId, Player player)
+        {
+            // igazából itt a player_tournament táblába kell beilleszteni játékost
+            T t = Read(tournamentId);
+            Update(t);
+
+            player.TournamentId = tournamentId;
         }
     }
 }

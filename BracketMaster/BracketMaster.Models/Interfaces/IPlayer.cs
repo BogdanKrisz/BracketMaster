@@ -2,7 +2,7 @@
 
 namespace BracketMaster.Models
 {
-    public interface IPlayer : IEntity<int>, IComparable<Player>
+    public interface IPlayer : IComparable<Player>
     {
         string Name { get; set; }
 

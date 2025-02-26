@@ -9,6 +9,7 @@ namespace BracketMaster.Logic
 {
     public interface ITournamentLogic<T> : IBaseLogic<T> where T : Tournament
     {
+        void AddPlayer(Player player);
         void StartNextRound(Tournament t);
         void StartElimination();
     }

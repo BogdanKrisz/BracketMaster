@@ -1,6 +1,6 @@
 ﻿namespace BracketMaster.Models
 {
-    public interface IMatch : IEntity<int>
+    public interface IMatch
     {
         Tournament Tournament { get; set; }
         int TournamentId { get; set; }

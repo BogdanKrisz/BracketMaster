@@ -1,7 +1,7 @@
 ﻿
 namespace BracketMaster.Models
 {
-    public interface ITournament : IEntity<int>
+    public interface ITournament
     {
         string Name { get; set; }
 
