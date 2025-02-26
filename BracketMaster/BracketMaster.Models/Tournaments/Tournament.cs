@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("Tournaments")]
     public abstract class Tournament : Entity, ITournament
     {
         public string Name { get; set; }

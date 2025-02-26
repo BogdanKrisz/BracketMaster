@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models.Tournament_Player
 {
-    [Table("BeerpongTournament_BeerpongPlayer")]
+    [Table("TournamentPlayer_Beerpong")]
     public class BeerpongTournament_BeerpongPlayer : Entity, ITournamentPlayer
     {
         [NotMapped]
