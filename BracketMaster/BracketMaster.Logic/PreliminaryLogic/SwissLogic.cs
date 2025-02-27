@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class SwissLogic
+    public class SwissLogic : IPreliminarySystem
     {
-
+        public void RunPreliminaryRound(Tournament t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
