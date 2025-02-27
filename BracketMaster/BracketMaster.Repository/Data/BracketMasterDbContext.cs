@@ -37,11 +37,12 @@ namespace BracketMaster.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // kapcsolatok
-            modelBuilder.Entity<Tournament>().UseTpcMappingStrategy(); // Table Per Concrete Class
+            // TCP Mapping beállítása az osztályokra -> minden leszármazottnak saját táblája van
+            modelBuilder.Entity<Tournament>().UseTpcMappingStrategy();
             modelBuilder.Entity<Player>().UseTpcMappingStrategy();
             modelBuilder.Entity<Match>().UseTpcMappingStrategy();
 
+            // kapcsolatok
             modelBuilder.Entity<Tournament>()
             .HasOne(t => t.KnockoutSystem)
             .WithMany()                         // Ha egy KnockoutSystem-et több torna is használhat

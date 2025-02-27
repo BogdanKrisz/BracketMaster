@@ -20,12 +20,14 @@ namespace BracketMaster.Logic
 
         public void Create(T item)
         {
+            if (item.Name == null) throw new ArgumentNullException("The name can't be empty!");
+
             _repository.Create(item);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public T Read(int id)
@@ -35,11 +37,13 @@ namespace BracketMaster.Logic
 
         public IQueryable<T> ReadAll()
         {
-            throw new NotImplementedException();
+            return _repository.ReadAll();
         }
 
         public void Update(T item)
         {
+            if (item.Name == null) throw new ArgumentNullException("The name can't be empty!");
+
             _repository.Update(item);
         }      
     }
