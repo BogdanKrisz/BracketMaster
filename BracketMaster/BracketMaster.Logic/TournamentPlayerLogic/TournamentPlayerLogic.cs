@@ -25,22 +25,22 @@ namespace BracketMaster.Logic
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public T Read(int id)
         {
-            throw new NotImplementedException();
+            return _repository.Read(id);
         }
 
         public IQueryable<T> ReadAll()
         {
-            throw new NotImplementedException();
+            return _repository.ReadAll();
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            _repository.Update(item);
         }
     }
 }
