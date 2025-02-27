@@ -33,12 +33,12 @@ namespace BracketMaster.Models
         public int PointsForWin { get; set; }
         public int PointsForLose { get; set; }
 
-        protected Tournament()
+        public Tournament()
         {
             
         }
 
-        protected Tournament(string name, int preliminaryId, int knockoutId, int playersToElimination)
+        public Tournament(string name, int preliminaryId, int knockoutId, int playersToElimination)
         {
             Name = name;
             PreliminarySystemId = preliminaryId;

@@ -42,6 +42,11 @@ namespace BracketMaster.Models
 
         public int WinnerId { get; set; }
 
+        protected Match()
+        {
+            
+        }
+
         protected Match(int tournamentId, int homeId, int awayId, int round)
         {
             TournamentId = tournamentId;

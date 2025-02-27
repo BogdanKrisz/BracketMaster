@@ -12,8 +12,8 @@ namespace BracketMaster.Models
         public string Name { get; set; }
 
         [NotMapped]
-        public virtual Tournament Tournament { get; set; }
-        public int TournamentId { get; set; }
+        public virtual Tournament? Tournament { get; set; }
+        public int? TournamentId { get; set; }
 
         [NotMapped]
         public virtual ICollection<Match> HomeMatches { get; set; }
@@ -43,16 +43,5 @@ namespace BracketMaster.Models
         }
 
         public abstract int CompareTo(Player? other);
-
-        protected Player()
-        {
-
-        }
-
-        protected Player(string name, int tournamentId)
-        {
-            Name = name;
-            TournamentId = tournamentId;
-        }
     }
 }

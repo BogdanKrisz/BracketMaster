@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("Tournaments_Beerpong")]
+    [Table("Beerpong_Tournaments")]
     public class BeerpongTournament : Tournament, IBeerpongTournament
     {
         public int PointsForOverTimeWin { get; set; }

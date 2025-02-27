@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("Players_Beerpong")]
+    [Table("Beerpong_Players")]
     public class BeerpongPlayer : Player, IBeerpongPlayer
     {
         public override int Points 
@@ -46,12 +46,7 @@ namespace BracketMaster.Models
             }
         }
 
-        public BeerpongPlayer() : base()
-        {
-            
-        }
-
-        public BeerpongPlayer(string name, int tournamentId) : base(name, tournamentId)
+        public BeerpongPlayer()
         {
             HomeMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());
             AwayMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());

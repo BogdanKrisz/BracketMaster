@@ -1,5 +1,4 @@
 ﻿using BracketMaster.Models;
-using BracketMaster.Models.Tournament_Player;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace BracketMaster.Repository
 {
     public class BracketMasterDbContext : DbContext
     {
-        public DbSet<BeerpongTournament_BeerpongPlayer> BeerpongTournaments_BeerpongPlayers { get; set; }
+        public DbSet<BeerpongTournamentPlayer> BeerpongTournaments_BeerpongPlayers { get; set; }
 
         public DbSet<PreliminarySystem> PreliminarySystems { get; set; }
         public DbSet<KnockoutSystem> KnockoutSystems { get; set; }
@@ -22,6 +21,7 @@ namespace BracketMaster.Repository
 
         public BracketMasterDbContext()
         {
+            this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
 
@@ -30,7 +30,7 @@ namespace BracketMaster.Repository
             if(!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                    .UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=P:\\Projects\\c#\\BracketMaster\\BracketMaster\\BracketMaster.Repository\\Database\\BracketMasterDb.mdf;Integrated Security=True;MultipleActiveResultSets=True")
+                    .UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=BracketMasterDb;AttachDbFilename=P:\\Projects\\c#\\BracketMaster\\BracketMaster\\BracketMaster.Repository\\Database\\BracketMasterDb.mdf;Integrated Security=True;MultipleActiveResultSets=True")
                     .UseLazyLoadingProxies();
             }
         }
@@ -38,6 +38,9 @@ namespace BracketMaster.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // kapcsolatok
+            modelBuilder.Entity<Tournament>().UseTpcMappingStrategy(); // Table Per Concrete Class
+            modelBuilder.Entity<Player>().UseTpcMappingStrategy();
+            modelBuilder.Entity<Match>().UseTpcMappingStrategy();
 
             modelBuilder.Entity<Tournament>()
             .HasOne(t => t.KnockoutSystem)

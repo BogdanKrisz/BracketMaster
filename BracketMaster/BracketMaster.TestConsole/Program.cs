@@ -11,26 +11,58 @@ namespace BracketMaster.TestConsole
             BracketMasterDbContext ctx = new BracketMasterDbContext();
             var bpongTournaments = ctx.BeerpongTournaments;
             var bpongRepo = new BeerpongTournamentRepository(ctx);
-            BeerpongTournamentLogic bpTLogic = new BeerpongTournamentLogic(bpongRepo);
+            var bpongTournamentPlayerRepo = new BeerpongTournamentPlayerRepository(ctx);
+            var bpongTournamentPlayerLogic = new BeerpongTournamentPlayerLogic(bpongTournamentPlayerRepo);
+            var bpongPlayerRepo = new BeerpongPlayerRepository(ctx);
+            var bpongPlayerLogic = new BeerpongPlayerLogic(bpongPlayerRepo);
+            BeerpongTournamentLogic bpTLogic = new BeerpongTournamentLogic(bpongRepo, bpongTournamentPlayerLogic, bpongPlayerLogic);
 
             // initialize db data
             DbInitializer.Initialize(ctx);
 
-            // 
-            BeerpongTournament nT = new BeerpongTournament()
+            // új bajnokság
+            BeerpongTournament t1 = new BeerpongTournament()
             {
                 Name = "Elite PreSeason #2",
-                KnockoutSystemId = 0,
-                PreliminarySystemId = 0,
+                KnockoutSystemId = 1,
+                PreliminarySystemId = 1,
                 PointsForWin = 3,
                 PointsForOverTimeWin = 2,
                 PointsForOverTimeLose = 1,
-                PointsForLose = 0,
+                PointsForLose = 0
             };
-            bpTLogic.AddPlayer(new BeerpongPlayer() { Name = "Játékos1" });
-            bpongRepo.Create(nT);
+            bpTLogic.Create(t1);
 
-            BeerpongTournamentLogic bpLogic = new BeerpongTournamentLogic(bpongRepo);
+            // új player
+            BeerpongPlayer p1 = new BeerpongPlayer()
+            {
+                Name = "Krisz"
+            };
+
+            BeerpongPlayer p2 = new BeerpongPlayer()
+            {
+                Name = "Erik"
+            };
+
+            BeerpongPlayer p3 = new BeerpongPlayer()
+            {
+                Name = "Roló"
+            };
+
+            BeerpongPlayer p4 = new BeerpongPlayer()
+            {
+                Name = "Szonja"
+            };
+            bpongPlayerLogic.Create(p1);
+            bpongPlayerLogic.Create(p2);
+            bpongPlayerLogic.Create(p3);
+            bpongPlayerLogic.Create(p4);
+
+            // player adása bajnoksághoz
+            bpTLogic.AddPlayer(1, 1);
+            bpTLogic.AddPlayer(1, 2);
+            bpTLogic.AddPlayer(1, 3);
+            bpTLogic.AddPlayer(1, 4);
         }
     }
 }

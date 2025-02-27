@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public interface ITournamentLogic<T> : IBaseLogic<T> where T : Tournament
+    public interface ITournamentLogic<T> : IBaseLogic<T> 
+        where T : Tournament
     {
-        void AddPlayer(Player player);
-        void StartNextRound(Tournament t);
+        void AddPlayer(int tournamentId, int playerId);
+        void StartNextRound(int tournamentId);
         void StartElimination();
     }
 }
