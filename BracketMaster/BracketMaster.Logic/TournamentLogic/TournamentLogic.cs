@@ -84,6 +84,9 @@ namespace BracketMaster.Logic
         public void StartNextRound(int tournamentId)
         {
             var t = Read(tournamentId);
+
+            
+
             switch (t.PreliminarySystem.Name)
             {
                 case "Groups":

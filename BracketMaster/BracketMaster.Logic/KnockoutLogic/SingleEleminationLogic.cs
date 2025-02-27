@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class SingleEleminationLogic
+    public class SingleEleminationLogic : IKnockoutSystem
     {
-        List<Player> Players;
-
-        public SingleEleminationLogic(List<Player> players)
+        public void RunKnockoutRound(Tournament t)
         {
-            Players = players;
+            throw new NotImplementedException();
         }
-
-        // megnézzük az összes playert, azt hogy hol helyezkednek el és meccseket csinálunk nekik
-
     }
 }
