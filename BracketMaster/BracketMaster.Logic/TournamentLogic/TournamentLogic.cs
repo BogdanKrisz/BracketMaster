@@ -84,29 +84,15 @@ namespace BracketMaster.Logic
         public void StartNextRound(int tournamentId)
         {
             var t = Read(tournamentId);
-
             
-
-            switch (t.PreliminarySystem.Name)
-            {
-                case "Groups":
-                    Console.WriteLine("Groups next round!");
-                    break;
-                case "Random":
-                    Console.WriteLine("Random next round!");
-                    break;
-                case "Swiss":
-                    Console.WriteLine("Swiss next round!");
-                    break;
-                case "Robin":
-                    Console.WriteLine("Round Robin next round!");
-                    break;
-            }
+            //t.RunPreliminaryRound(t); <-- ezt szeretném, de ugye modell rétegben nem valósítja meg a tournament az IPreliminarySystem -t
+            //// ami ugye nyilván nem baj, mert logic rétegből ne valósítson meg semmit, viszont a model rétegben nem kéne előírni neki, hogy milyen logikát és hogy valósítson meg, erre van a logic réteg
         }
 
-        public void StartElimination()
+        public void StartElimination(int tournamentId)
         {
-            throw new NotImplementedException();
+            var t = Read(tournamentId);
+            //t.StartElemination();
         }
 
         public abstract void AddPlayer(int tournamentId, int playerId);

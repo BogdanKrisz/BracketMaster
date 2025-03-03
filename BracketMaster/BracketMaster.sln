@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.Logic", "Brac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.TestConsole", "BracketMaster.TestConsole\BracketMaster.TestConsole.csproj", "{9C07E8F9-2815-4139-B497-2C5BB19CB92B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketMaster.Service", "BracketMaster.Service\BracketMaster.Service.csproj", "{4FEA9541-3B01-46AC-9D4E-088202621439}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C07E8F9-2815-4139-B497-2C5BB19CB92B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FEA9541-3B01-46AC-9D4E-088202621439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FEA9541-3B01-46AC-9D4E-088202621439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FEA9541-3B01-46AC-9D4E-088202621439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FEA9541-3B01-46AC-9D4E-088202621439}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

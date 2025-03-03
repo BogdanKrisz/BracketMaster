@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class RoundRobinLogic : IPreliminarySystem
+    public class RoundRobinLogic : IPreliminaryLogic
     {
-        public void RunPreliminaryRound(Tournament t)
+        public void ExecutePreliminary(Tournament t)
         {
             throw new NotImplementedException();
         }

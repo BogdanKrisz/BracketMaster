@@ -1,6 +1,7 @@
 ﻿using BracketMaster.Logic;
 using BracketMaster.Models;
 using BracketMaster.Repository;
+using BracketMaster.Service;
 
 namespace BracketMaster.TestConsole
 {
@@ -63,6 +64,11 @@ namespace BracketMaster.TestConsole
             bpTLogic.AddPlayer(1, 2);
             bpTLogic.AddPlayer(1, 3);
             bpTLogic.AddPlayer(1, 4);
+
+            ITournamentRepository<BeerpongTournament> bpTournamentRepo = new BeerpongTournamentRepository(ctx);
+            IKnockoutLogic koLogic = new SingleEleminationLogic();
+            TournamentService<BeerpongTournament> bpService = new TournamentService<BeerpongTournament>(bpTournamentRepo, koLogic);
+            bpService.StartTournament(1);
         }
     }
 }

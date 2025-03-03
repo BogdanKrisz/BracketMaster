@@ -12,6 +12,6 @@ namespace BracketMaster.Logic
     {
         void AddPlayer(int tournamentId, int playerId);
         void StartNextRound(int tournamentId);
-        void StartElimination();
+        void StartElimination(int tournamentId);
     }
 }

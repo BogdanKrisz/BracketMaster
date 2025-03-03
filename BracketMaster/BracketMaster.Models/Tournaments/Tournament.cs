@@ -35,15 +35,8 @@ namespace BracketMaster.Models
 
         public Tournament()
         {
-            
-        }
-
-        public Tournament(string name, int preliminaryId, int knockoutId, int playersToElimination)
-        {
-            Name = name;
-            PreliminarySystemId = preliminaryId;
-            KnockoutSystemId = knockoutId;
-            PlayersToElimination = playersToElimination;
+            Players = new HashSet<Player>();
+            Matches = new HashSet<Match>();
         }
     }
 }

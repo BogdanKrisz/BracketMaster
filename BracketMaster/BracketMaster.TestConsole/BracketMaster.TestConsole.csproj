@@ -11,6 +11,7 @@
     <ProjectReference Include="..\BracketMaster.Logic\BracketMaster.Logic.csproj" />
     <ProjectReference Include="..\BracketMaster.Models\BracketMaster.Models.csproj" />
     <ProjectReference Include="..\BracketMaster.Repository\BracketMaster.Repository.csproj" />
+    <ProjectReference Include="..\BracketMaster.Service\BracketMaster.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class DoubleEleminationLogic : IKnockoutSystem
+    public class DoubleEleminationLogic : IKnockoutLogic
     {
-        public void RunKnockoutRound(Tournament t)
+        public void ExecuteKnockout(Tournament t)
         {
             throw new NotImplementedException();
         }
