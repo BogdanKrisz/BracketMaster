@@ -11,13 +11,15 @@ namespace BracketMaster.Service
 {
     public class TournamentService<T> : ITournamentService<T> where T : Tournament
     {
-        private readonly ITournamentRepository<T> _tournamentRepository;
-        private readonly IKnockoutLogic _knockoutLogic;
+        readonly ITournamentRepository<T> _tournamentRepository;
+        readonly IKnockoutLogic _knockoutLogic;
+        readonly IPreliminaryLogic _preliminaryLogic;
 
-        public TournamentService(ITournamentRepository<T> tournamentRepository, IKnockoutLogic knockoutLogic)
+        public TournamentService(ITournamentRepository<T> tournamentRepository, IKnockoutLogic knockoutLogic, IPreliminaryLogic preliminaryLogic)
         {
             _tournamentRepository = tournamentRepository;
             _knockoutLogic = knockoutLogic;
+            _preliminaryLogic = preliminaryLogic;
         }
 
         public void StartTournament(int tournamentId)
@@ -28,9 +30,25 @@ namespace BracketMaster.Service
 
             // 2️⃣ Logika futtatása
             _knockoutLogic.ExecuteKnockout(tournament);
+        }
 
-            // 3️⃣ Adatok mentése
-            _tournamentRepository.Update(tournament);
+        public void StartPreliminary(int tournamentId)
+        {
+            // 1️⃣ Adatok lekérése a Repository rétegből
+            var tournament = _tournamentRepository.Read(tournamentId);
+            if (tournament == null) throw new Exception("Tournament not found");
+
+            // 2️⃣ Logika futtatása
+            _preliminaryLogic.ExecutePreliminary(tournament);
+        }
+
+        // Ide kéne az add player a tournamentre sztem
+        public void AddPlayer(int tournamentId, int playerId)
+        {
+            var tournament = _tournamentRepository.Read(tournamentId);
+            if (tournament == null) throw new Exception("Tournament not found");
+
+            // player ellenőrzés és addolás
         }
     }
 }

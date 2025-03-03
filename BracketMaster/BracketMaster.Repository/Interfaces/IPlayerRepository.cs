@@ -5,11 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BracketMaster.Logic
+namespace BracketMaster.Repository
 {
-    public interface ITournamentLogic<T> where T : Tournament
+    public interface IPlayerRepository<T> : IRepository<T> where T : Player
     {
-        void Validate(T item);
-        void GenerateNextRound();
     }
 }

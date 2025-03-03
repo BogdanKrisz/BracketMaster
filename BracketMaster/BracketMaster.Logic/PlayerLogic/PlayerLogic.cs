@@ -8,43 +8,16 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public abstract class PlayerLogic<T> : IPlayerLogic<T>
-        where T : Player
+    public abstract class PlayerLogic<T> : IPlayerLogic<T> where T : Player
     {
-        readonly IRepository<T> _repository;
-
-        public PlayerLogic(IRepository<T> playerRepo)
+        protected PlayerLogic()
         {
-            _repository = playerRepo;
+            
         }
 
-        public void Create(T item)
+        public void Validate(T item)
         {
-            if (item.Name == null) throw new ArgumentNullException("The name can't be empty!");
-
-            _repository.Create(item);
+            throw new NotImplementedException();
         }
-
-        public void Delete(int id)
-        {
-            _repository.Delete(id);
-        }
-
-        public T Read(int id)
-        {
-            return _repository.Read(id);
-        }
-
-        public IQueryable<T> ReadAll()
-        {
-            return _repository.ReadAll();
-        }
-
-        public void Update(T item)
-        {
-            if (item.Name == null) throw new ArgumentNullException("The name can't be empty!");
-
-            _repository.Update(item);
-        }      
     }
 }
