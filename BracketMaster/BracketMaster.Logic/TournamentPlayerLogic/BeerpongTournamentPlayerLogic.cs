@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public class BeerpongTournamentPlayerLogic : TournamentPlayerLogic<BeerpongTournamentPlayer>
+    public class BeerpongTournamentPlayerLogic : TournamentPlayerLogic<BeerpongTournamentPlayer>, ITournamentPlayerLogic<BeerpongTournamentPlayer>
     {
-        public BeerpongTournamentPlayerLogic(IRepository<BeerpongTournamentPlayer> tournamentPlayerRepo) : base(tournamentPlayerRepo)
+        public BeerpongTournamentPlayerLogic()
         {
         }
     }
