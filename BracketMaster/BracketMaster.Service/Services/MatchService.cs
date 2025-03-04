@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public class MatchService
-    {
-    }
     public class MatchService<T> : IMatchService<T> where T : Match
     {
         readonly IMatchRepository<T> _matchRepository;
@@ -21,6 +18,31 @@ namespace BracketMaster.Service
         {
             _matchRepository = matchRepository;
             _matchLogic = matchLogic;
+        }
+
+        public void Create(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Read(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<T> ReadAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(T item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

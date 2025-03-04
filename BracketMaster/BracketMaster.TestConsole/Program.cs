@@ -10,13 +10,11 @@ namespace BracketMaster.TestConsole
         static void Main(string[] args)
         {
             BracketMasterDbContext ctx = new BracketMasterDbContext();
-            var bpongTournaments = ctx.BeerpongTournaments;
-            var bpongRepo = new BeerpongTournamentRepository(ctx);
-            var bpongTournamentPlayerRepo = new BeerpongTournamentPlayerRepository(ctx);
-            var bpongTournamentPlayerLogic = new BeerpongTournamentPlayerLogic(bpongTournamentPlayerRepo);
-            var bpongPlayerRepo = new BeerpongPlayerRepository(ctx);
-            var bpongPlayerLogic = new BeerpongPlayerLogic(bpongPlayerRepo);
-            BeerpongTournamentLogic bpTLogic = new BeerpongTournamentLogic(bpongRepo, bpongTournamentPlayerLogic, bpongPlayerLogic);
+
+            var bpTournamentRepo = new BeerpongTournamentRepository(ctx);
+            IKnockoutLogic koLogic = new SingleEleminationLogic();
+            IPreliminaryLogic preLogic = new RandomEnemyLogic();
+            TournamentService<BeerpongTournament> tournamentService = new TournamentService<BeerpongTournament>(bpTournamentRepo, koLogic, preLogic);
 
             // initialize db data
             DbInitializer.Initialize(ctx);
@@ -66,9 +64,8 @@ namespace BracketMaster.TestConsole
             bpTLogic.AddPlayer(1, 4);
 
             ITournamentRepository<BeerpongTournament> bpTournamentRepo = new BeerpongTournamentRepository(ctx);
-            IKnockoutLogic koLogic = new SingleEleminationLogic();
-            TournamentService<BeerpongTournament> bpService = new TournamentService<BeerpongTournament>(bpTournamentRepo, koLogic);
-            bpService.StartTournament(1);
+
+            tournamentService.StartTournament(1);
         }
     }
 }
