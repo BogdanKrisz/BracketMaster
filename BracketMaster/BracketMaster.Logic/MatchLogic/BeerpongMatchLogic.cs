@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public interface ITournamentLogic<T> where T : Tournament
+    public class BeerpongMatchLogic : MatchLogic<BeerpongMatch>, IMatchLogic<BeerpongMatch>
     {
-        void Validate(T item);
+        public BeerpongMatchLogic()
+        {
+        }
     }
 }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public abstract class PlayerLogic<T> : IPlayerLogic<T> where T : Player
+    public abstract class MatchLogic<T> : IMatchLogic<T> where T : Match
     {
-        protected PlayerLogic()
+        protected MatchLogic()
         {
-            
+
         }
 
         public virtual void Validate(T item)

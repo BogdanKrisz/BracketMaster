@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BracketMaster.Logic
+namespace BracketMaster.Repository
 {
-    public interface ITournamentLogic<T> where T : Tournament
+    public interface IMatchRepository<T> : IRepository<T> where T : Match
     {
-        void Validate(T item);
     }
 }

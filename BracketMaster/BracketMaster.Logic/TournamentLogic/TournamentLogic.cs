@@ -12,12 +12,12 @@ namespace BracketMaster.Logic
 
     public abstract class TournamentLogic<T> : ITournamentLogic<T> where T : Tournament
     {
-        public TournamentLogic()
+        protected TournamentLogic()
         {
  
         }
 
-        public void Validate(T item)
+        public virtual void Validate(T item)
         {
             if (item == null) throw new ArgumentNullException($"Tournament is null!");
             if (item.Name.Length < 3) throw new ArgumentException($"'{item.Name}' for tournament name is too short!");
@@ -25,13 +25,6 @@ namespace BracketMaster.Logic
             if (item.PreliminarySystemId < 0) throw new ArgumentNullException("Preliminary type is invalid!");
             if (item.PointsForWin <= 0) throw new ArgumentException("Points for win can't be lower than 1!");
             if (item.PointsForLose >= item.PointsForWin) throw new ArgumentException("Points for lose has to be lower than points for win!");
-        }
-
-        // NON CRUD
-
-        public void GenerateNextRound()
-        {
-
         }
     }
 }

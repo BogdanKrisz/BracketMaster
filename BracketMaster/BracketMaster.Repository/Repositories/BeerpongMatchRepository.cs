@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Repository
 {
-    public class BeerpongMatchRepository : Repository<BeerpongMatch>, IRepository<BeerpongMatch>
+    public class BeerpongMatchRepository : Repository<BeerpongMatch>, IMatchRepository<BeerpongMatch>
     {
         public BeerpongMatchRepository(BracketMasterDbContext ctx) : base(ctx)
         {

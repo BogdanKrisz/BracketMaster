@@ -11,4 +11,8 @@
     <ProjectReference Include="..\BracketMaster.Repository\BracketMaster.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Classes\" />
+  </ItemGroup>
+
 </Project>
