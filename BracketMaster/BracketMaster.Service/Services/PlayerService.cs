@@ -22,7 +22,8 @@ namespace BracketMaster.Service
 
         public void Create(T item)
         {
-            throw new NotImplementedException();
+            _playerLogic.Validate(item);
+            _playerRepository.Create(item);
         }
 
         public void Delete(int id)

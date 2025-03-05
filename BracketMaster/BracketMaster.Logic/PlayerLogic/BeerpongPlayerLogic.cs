@@ -12,6 +12,12 @@ namespace BracketMaster.Logic
     {
         public BeerpongPlayerLogic()
         {
+
+        }
+
+        public override void Validate(BeerpongPlayer item)
+        {
+            base.Validate(item);
         }
     }
 }

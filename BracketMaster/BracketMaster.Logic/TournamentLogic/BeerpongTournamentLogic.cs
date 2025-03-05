@@ -14,5 +14,10 @@ namespace BracketMaster.Logic
         {
 
         }
+
+        public override void Validate(BeerpongTournament item)
+        {
+            base.Validate(item);
+        }
     }
 }

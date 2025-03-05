@@ -33,3 +33,7 @@ publish/
 dist/
 logs/
 secrets/
+
+# SQL adatbázis fájlok
+*.mdf
+*.ldf

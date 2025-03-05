@@ -9,7 +9,7 @@ namespace BracketMaster.Logic
 {
     public class GroupsLogic : IPreliminaryLogic
     {
-        public void ExecutePreliminary(Tournament t)
+        public void ExecutePreliminary(PreliminarySystem preliminary, Tournament t)
         {
             throw new NotImplementedException();
         }

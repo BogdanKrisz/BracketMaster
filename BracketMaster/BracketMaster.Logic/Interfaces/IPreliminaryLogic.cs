@@ -9,6 +9,6 @@ namespace BracketMaster.Logic
 {
     public interface IPreliminaryLogic
     {
-        void ExecutePreliminary(Tournament t);
+        void ExecutePreliminary(PreliminarySystem preliminary, Tournament tournament);
     }
 }

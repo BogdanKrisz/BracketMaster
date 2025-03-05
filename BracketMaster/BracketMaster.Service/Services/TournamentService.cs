@@ -15,12 +15,14 @@ namespace BracketMaster.Service
         readonly ITournamentLogic<T> _tournamentLogic;
 
         readonly KnockoutHandlerFactory _knockoutHandlerFactory;
+        readonly PreliminaryHandlerFactory _preliminaryHandlerFactory;
 
-        public TournamentService(ITournamentRepository<T> tournamentRepository, ITournamentLogic<T> tournamentLogic, KnockoutHandlerFactory knockoutHandlerFactory)
+        public TournamentService(ITournamentRepository<T> tournamentRepository, ITournamentLogic<T> tournamentLogic, KnockoutHandlerFactory knockoutHandlerFactory, PreliminaryHandlerFactory preliminaryHandlerFactory)
         {
             _tournamentRepository = tournamentRepository;
             _tournamentLogic = tournamentLogic;
             _knockoutHandlerFactory = knockoutHandlerFactory;
+            _preliminaryHandlerFactory = preliminaryHandlerFactory;
         }
 
         public void StartTournament(int tournamentId)
@@ -46,12 +48,23 @@ namespace BracketMaster.Service
 
         public void StartKnockout(int tournamentId)
         {
-            // 1️⃣ Adatok lekérése a Repository rétegből
+            // get tournament
             var tournament = _tournamentRepository.Read(tournamentId);
             if (tournament == null) throw new Exception("Tournament not found");
 
-            // 2️⃣ Logika futtatása
-            _knockoutLogic.ExecuteKnockout(tournament);
+            // validate
+            _tournamentLogic.Validate(tournament);
+
+            // get preliminary system
+            var preliminarySystem = tournament.PreliminarySystem;
+            if (preliminarySystem == null)
+                throw new Exception("No preliminary system assigned to this tournament!");
+
+            // get logic for preliminary system
+            var preliminaryLogic = _preliminaryHandlerFactory.GetLogic(preliminarySystem);
+
+            // execute preliminary
+            preliminaryLogic.ExecutePreliminary(preliminarySystem, tournament);
         }
 
         // Ide kéne az add player a tournamentre sztem

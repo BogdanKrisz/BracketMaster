@@ -1,11 +1,16 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BracketMaster.Models
 {
-    public class KnockoutSystem : IKnockoutSystem
+    [Table("KnockoutSystems")]
+    public class KnockoutSystem : Entity
     {
+        [Required]
         public string Name { get; set; }
+
         public string? Description { get; set; }
     }
 }

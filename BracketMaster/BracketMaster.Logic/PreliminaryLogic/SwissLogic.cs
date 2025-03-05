@@ -10,7 +10,7 @@ namespace BracketMaster.Logic
 {
     public class SwissLogic : IPreliminaryLogic
     {
-        public void ExecutePreliminary(Tournament t)
+        public void ExecutePreliminary(PreliminarySystem preliminary, Tournament t)
         {
             throw new NotImplementedException();
         }

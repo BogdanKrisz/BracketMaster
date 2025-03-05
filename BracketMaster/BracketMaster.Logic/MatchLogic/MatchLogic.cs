@@ -17,7 +17,7 @@ namespace BracketMaster.Logic
 
         public virtual void Validate(T item)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

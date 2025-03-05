@@ -11,19 +11,33 @@ namespace BracketMaster.TestConsole
         static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
+                
+                .AddScoped<BracketMasterDbContext>()
+
+                .AddScoped<ITournamentRepository<BeerpongTournament>, BeerpongTournamentRepository>()
+                .AddScoped<IPlayerRepository<BeerpongPlayer>, BeerpongPlayerRepository>()
+
+                .AddScoped<ITournamentLogic<BeerpongTournament>, BeerpongTournamentLogic>()
+                .AddScoped<IPlayerLogic<BeerpongPlayer>, BeerpongPlayerLogic>()
+                .AddScoped<GroupsLogic>()
+                .AddScoped<RandomEnemyLogic>()
+                .AddScoped<SwissLogic>()
+                .AddScoped<RoundRobinLogic>()
+                .AddScoped<PreliminaryHandlerFactory>()
+                .AddScoped<NoneEleminationLogic>()
+                .AddScoped<SingleEleminationLogic>()
+                .AddScoped<DoubleEleminationLogic>()
+                .AddScoped<TripleEleminationLogic>()
+                .AddScoped<KnockoutHandlerFactory>()
                 .AddScoped(typeof(ITournamentService<>), typeof(TournamentService<>))
+                .AddScoped(typeof(IPlayerService<>), typeof(PlayerService<>))
                 .BuildServiceProvider();
 
-            var knockoutService = serviceProvider.GetRequiredService<ITournamentService<KnockoutSystem>>();
-
-            BracketMasterDbContext ctx = new BracketMasterDbContext();
-
-            var bpTournamentRepo = new BeerpongTournamentRepository(ctx);
-            IKnockoutLogic koLogic = new SingleEleminationLogic();
-            IPreliminaryLogic preLogic = new RandomEnemyLogic();
-            TournamentService<BeerpongTournament> tournamentService = new TournamentService<BeerpongTournament>(bpTournamentRepo, koLogic, preLogic);
+            var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament>>();
+            var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer>>();
 
             // initialize db data
+            var ctx = serviceProvider.GetRequiredService<BracketMasterDbContext>();
             DbInitializer.Initialize(ctx);
 
             // új bajnokság
@@ -38,10 +52,7 @@ namespace BracketMaster.TestConsole
                 PointsForLose = 0
             };
 
-            tournamentService.Create(t1);
-
-
-            bpTLogic.Create(t1);
+            bpService.Create(t1);
 
             // új player
             BeerpongPlayer p1 = new BeerpongPlayer()
@@ -63,20 +74,27 @@ namespace BracketMaster.TestConsole
             {
                 Name = "Szonja"
             };
-            bpongPlayerLogic.Create(p1);
-            bpongPlayerLogic.Create(p2);
-            bpongPlayerLogic.Create(p3);
-            bpongPlayerLogic.Create(p4);
+
+            pService.Create(p1);
+            pService.Create(p2);
+            pService.Create(p3);
+            pService.Create(p4);
+
+
+            bpService.AddPlayer(1, 1);
+            bpService.AddPlayer(1, 2);
+            bpService.AddPlayer(1, 3);
+            bpService.AddPlayer(1, 4);
 
             // player adása bajnoksághoz
-            bpTLogic.AddPlayer(1, 1);
-            bpTLogic.AddPlayer(1, 2);
-            bpTLogic.AddPlayer(1, 3);
-            bpTLogic.AddPlayer(1, 4);
+            //bpTLogic.AddPlayer(1, 1);
+            //bpTLogic.AddPlayer(1, 2);
+            //bpTLogic.AddPlayer(1, 3);
+            //bpTLogic.AddPlayer(1, 4);
 
-            ITournamentRepository<BeerpongTournament> bpTournamentRepo = new BeerpongTournamentRepository(ctx);
+            //ITournamentRepository<BeerpongTournament> bpTournamentRepo = new BeerpongTournamentRepository(ctx);
 
-            tournamentService.StartTournament(1);
+            //tournamentService.StartTournament(1);
         }
     }
 }
