@@ -2,6 +2,7 @@
 using BracketMaster.Models;
 using BracketMaster.Repository;
 using BracketMaster.Service;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BracketMaster.TestConsole
 {
@@ -9,6 +10,12 @@ namespace BracketMaster.TestConsole
     {
         static void Main(string[] args)
         {
+            var serviceProvider = new ServiceCollection()
+                .AddScoped(typeof(ITournamentService<>), typeof(TournamentService<>))
+                .BuildServiceProvider();
+
+            var knockoutService = serviceProvider.GetRequiredService<ITournamentService<KnockoutSystem>>();
+
             BracketMasterDbContext ctx = new BracketMasterDbContext();
 
             var bpTournamentRepo = new BeerpongTournamentRepository(ctx);
@@ -30,6 +37,10 @@ namespace BracketMaster.TestConsole
                 PointsForOverTimeLose = 1,
                 PointsForLose = 0
             };
+
+            tournamentService.Create(t1);
+
+
             bpTLogic.Create(t1);
 
             // új player

@@ -9,7 +9,7 @@ namespace BracketMaster.Logic
 {
     public class DoubleEleminationLogic : IKnockoutLogic
     {
-        public void ExecuteKnockout(Tournament t)
+        public void ExecuteKnockout(KnockoutSystem knockout, Tournament tournament)
         {
             throw new NotImplementedException();
         }

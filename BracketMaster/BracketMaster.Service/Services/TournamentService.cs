@@ -12,17 +12,39 @@ namespace BracketMaster.Service
     public class TournamentService<T> : ITournamentService<T> where T : Tournament
     {
         readonly ITournamentRepository<T> _tournamentRepository;
-        readonly IKnockoutLogic _knockoutLogic;
-        readonly IPreliminaryLogic _preliminaryLogic;
+        readonly ITournamentLogic<T> _tournamentLogic;
 
-        public TournamentService(ITournamentRepository<T> tournamentRepository, IKnockoutLogic knockoutLogic, IPreliminaryLogic preliminaryLogic)
+        readonly KnockoutHandlerFactory _knockoutHandlerFactory;
+
+        public TournamentService(ITournamentRepository<T> tournamentRepository, ITournamentLogic<T> tournamentLogic, KnockoutHandlerFactory knockoutHandlerFactory)
         {
             _tournamentRepository = tournamentRepository;
-            _knockoutLogic = knockoutLogic;
-            _preliminaryLogic = preliminaryLogic;
+            _tournamentLogic = tournamentLogic;
+            _knockoutHandlerFactory = knockoutHandlerFactory;
         }
 
         public void StartTournament(int tournamentId)
+        {
+            // get tournament
+            var tournament = _tournamentRepository.Read(tournamentId);
+            if (tournament == null) throw new Exception("Tournament not found");
+
+            // validate
+            _tournamentLogic.Validate(tournament);
+
+            // get knockout system
+            var knockoutSystem = tournament.KnockoutSystem;
+            if (knockoutSystem == null)
+                throw new Exception("No knockout system assigned to this tournament!");
+
+            // get logic for knockout system
+            var knockoutLogic = _knockoutHandlerFactory.GetLogic(knockoutSystem);
+
+            // execute knockout
+            knockoutLogic.ExecuteKnockout(knockoutSystem, tournament);
+        }
+
+        public void StartKnockout(int tournamentId)
         {
             // 1️⃣ Adatok lekérése a Repository rétegből
             var tournament = _tournamentRepository.Read(tournamentId);
@@ -30,16 +52,6 @@ namespace BracketMaster.Service
 
             // 2️⃣ Logika futtatása
             _knockoutLogic.ExecuteKnockout(tournament);
-        }
-
-        public void StartPreliminary(int tournamentId)
-        {
-            // 1️⃣ Adatok lekérése a Repository rétegből
-            var tournament = _tournamentRepository.Read(tournamentId);
-            if (tournament == null) throw new Exception("Tournament not found");
-
-            // 2️⃣ Logika futtatása
-            _preliminaryLogic.ExecutePreliminary(tournament);
         }
 
         // Ide kéne az add player a tournamentre sztem
@@ -53,7 +65,8 @@ namespace BracketMaster.Service
 
         public void Create(T item)
         {
-            throw new NotImplementedException();
+            _tournamentLogic.Validate(item);
+            _tournamentRepository.Create(item);
         }
 
         public T Read(int id)

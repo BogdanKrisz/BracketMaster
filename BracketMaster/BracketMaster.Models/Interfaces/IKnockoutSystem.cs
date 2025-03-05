@@ -4,7 +4,5 @@
     {
         string? Description { get; set; }
         string Name { get; set; }
-
-        void StartKnockout();
     }
 }

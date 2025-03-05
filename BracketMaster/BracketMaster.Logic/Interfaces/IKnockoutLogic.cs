@@ -9,6 +9,6 @@ namespace BracketMaster.Logic
 {
     public interface IKnockoutLogic
     {
-        void ExecuteKnockout(Tournament t);
+        void ExecuteKnockout(KnockoutSystem knockout, Tournament tournament);
     }
 }
