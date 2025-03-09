@@ -16,6 +16,10 @@ namespace BracketMaster.Models
         public int? TournamentId { get; set; }
 
         [NotMapped]
+        public virtual Group? Group { get; set; }
+        public int? GroupId { get; set; }
+
+        [NotMapped]
         public virtual ICollection<Match> HomeMatches { get; set; }
 
         [NotMapped]

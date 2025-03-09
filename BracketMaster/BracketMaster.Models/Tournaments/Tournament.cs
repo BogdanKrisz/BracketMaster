@@ -23,12 +23,20 @@ namespace BracketMaster.Models
         [NotMapped]
         public virtual PreliminarySystem PreliminarySystem { get; set; }
         public int PreliminarySystemId { get; set; }
- 
+
+        [NotMapped]
+        public virtual ICollection<Group> Groups { get; set; }
+
         [NotMapped]
         public virtual KnockoutSystem KnockoutSystem { get; set; }
         public int KnockoutSystemId { get; set; }
 
-        public int PlayersToElimination { get; set; }
+        // How many players advance to KO
+        public int PlayersToAdvance { get; set; }
+
+        // True -> Best X goes through from every group (depends on PlayersToAdvance)
+        // False -> Ranking every player and the best players goes true (depends on the PlayersToAdvance)
+        public bool GroupAdvancement { get; set; }
 
         public int PointsForWin { get; set; }
         public int PointsForLose { get; set; }
@@ -37,6 +45,8 @@ namespace BracketMaster.Models
         {
             Players = new HashSet<Player>();
             Matches = new HashSet<Match>();
+            Groups = new HashSet<Group>();
         }
+
     }
 }

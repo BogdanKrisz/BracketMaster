@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BracketMaster.Models
+{
+    [Table("Beerpong_Groups")]
+    public class BeerpongGroup : Group
+    {
+        public BeerpongGroup()
+        {
+            Players = new HashSet<Player>(new HashSet<BeerpongPlayer>());
+        }
+    }
+}

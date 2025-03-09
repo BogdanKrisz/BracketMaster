@@ -27,6 +27,7 @@ namespace BracketMaster.Models
         {
             Players = new HashSet<Player>(new HashSet<BeerpongPlayer>());
             Matches = new HashSet<Match>(new HashSet<BeerpongMatch>());
+            Groups = new HashSet<Group>(new HashSet<BeerpongGroup>());
         }
     }
 }

@@ -15,6 +15,7 @@ namespace BracketMaster.Models
         int PreliminarySystemId { get; set; }
         int KnockoutSystemId { get; set; }
 
-        int PlayersToElimination { get; set; }
+        int PlayersToAdvance { get; set; }
+        bool GroupAdvancement { get; set; }
     }
 }

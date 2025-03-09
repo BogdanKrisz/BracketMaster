@@ -9,97 +9,170 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public class TournamentService<T> : ITournamentService<T> where T : Tournament
+    public class TournamentService<T, K> : ITournamentService<T, K> 
+        where T : Tournament 
+        where K : Player
     {
         readonly ITournamentRepository<T> _tournamentRepository;
         readonly ITournamentLogic<T> _tournamentLogic;
 
+        readonly IPlayerService<K> _playerService;
+
         readonly KnockoutHandlerFactory _knockoutHandlerFactory;
         readonly PreliminaryHandlerFactory _preliminaryHandlerFactory;
 
-        public TournamentService(ITournamentRepository<T> tournamentRepository, ITournamentLogic<T> tournamentLogic, KnockoutHandlerFactory knockoutHandlerFactory, PreliminaryHandlerFactory preliminaryHandlerFactory)
+        public TournamentService(ITournamentRepository<T> tournamentRepository, ITournamentLogic<T> tournamentLogic, IPlayerService<K> playerService, KnockoutHandlerFactory knockoutHandlerFactory, PreliminaryHandlerFactory preliminaryHandlerFactory)
         {
             _tournamentRepository = tournamentRepository;
             _tournamentLogic = tournamentLogic;
+            _playerService = playerService;
             _knockoutHandlerFactory = knockoutHandlerFactory;
             _preliminaryHandlerFactory = preliminaryHandlerFactory;
         }
 
         public void StartTournament(int tournamentId)
         {
-            // get tournament
-            var tournament = _tournamentRepository.Read(tournamentId);
-            if (tournament == null) throw new Exception("Tournament not found");
+            // kellene preliminaryService
+            // kellene knockoutService
+            // itt a start tournamentből a preliminaryServicebe át -> és indítani az új köröket (előre megkéne határozni a körök számát, ha 0 akkor meg manuálisan kövi kör indítás)
 
-            // validate
-            _tournamentLogic.Validate(tournament);
 
-            // get knockout system
-            var knockoutSystem = tournament.KnockoutSystem;
-            if (knockoutSystem == null)
-                throw new Exception("No knockout system assigned to this tournament!");
+            // fontos lenne!!! -> Groups preliminarynál választási lehetőség
+            // előre meghatározott (A1 vs D2 ...) vagy rangsor ott is 
+            try
+            {
+                // get tournament
+                var tournament = _tournamentRepository.Read(tournamentId);
+                if (tournament == null) throw new Exception("Tournament not found");
 
-            // get logic for knockout system
-            var knockoutLogic = _knockoutHandlerFactory.GetLogic(knockoutSystem);
+                // validate
+                _tournamentLogic.Validate(tournament);
 
-            // execute knockout
-            knockoutLogic.ExecuteKnockout(knockoutSystem, tournament);
+                // get knockout system
+                var knockoutSystem = tournament.KnockoutSystem;
+                if (knockoutSystem == null)
+                    throw new Exception("No knockout system assigned to this tournament!");
+
+                // get logic for knockout system
+                var knockoutLogic = _knockoutHandlerFactory.GetLogic(knockoutSystem);
+
+                // execute knockout
+                knockoutLogic.ExecuteKnockout(knockoutSystem, tournament);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void StartKnockout(int tournamentId)
         {
-            // get tournament
-            var tournament = _tournamentRepository.Read(tournamentId);
-            if (tournament == null) throw new Exception("Tournament not found");
+            try
+            {
+                // get tournament
+                var tournament = _tournamentRepository.Read(tournamentId);
+                if (tournament == null) throw new Exception("Tournament not found");
 
-            // validate
-            _tournamentLogic.Validate(tournament);
+                // validate
+                _tournamentLogic.Validate(tournament);
 
-            // get preliminary system
-            var preliminarySystem = tournament.PreliminarySystem;
-            if (preliminarySystem == null)
-                throw new Exception("No preliminary system assigned to this tournament!");
+                // get preliminary system
+                var preliminarySystem = tournament.PreliminarySystem;
+                if (preliminarySystem == null)
+                    throw new Exception("No preliminary system assigned to this tournament!");
 
-            // get logic for preliminary system
-            var preliminaryLogic = _preliminaryHandlerFactory.GetLogic(preliminarySystem);
+                // get logic for preliminary system
+                var preliminaryLogic = _preliminaryHandlerFactory.GetLogic(preliminarySystem);
 
-            // execute preliminary
-            preliminaryLogic.ExecutePreliminary(preliminarySystem, tournament);
+                // execute preliminary
+                preliminaryLogic.ExecutePreliminary(preliminarySystem, tournament);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        // Ide kéne az add player a tournamentre sztem
         public void AddPlayer(int tournamentId, int playerId)
         {
-            var tournament = _tournamentRepository.Read(tournamentId);
-            if (tournament == null) throw new Exception("Tournament not found");
+            try
+            {
+                var tournament = _tournamentRepository.Read(tournamentId);
+                if (tournament == null) throw new Exception("Tournament not found");
 
-            // player ellenőrzés és addolás
+                // player ellenőrzés és addolás
+                var player = _playerService.Read(playerId);
+                if (player == null) throw new Exception("Player not found");
+
+                player.TournamentId = tournamentId;
+                _playerService.Update(player);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Create(T item)
         {
-            _tournamentLogic.Validate(item);
-            _tournamentRepository.Create(item);
+            try
+            {
+                _tournamentLogic.Validate(item);
+                _tournamentRepository.Create(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public T Read(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _tournamentRepository.Read(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public IQueryable<T> ReadAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _tournamentRepository.ReadAll();
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _tournamentLogic.Validate(item);
+                _tournamentRepository.Update(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _tournamentRepository.Delete(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            } 
         }
     }
 }

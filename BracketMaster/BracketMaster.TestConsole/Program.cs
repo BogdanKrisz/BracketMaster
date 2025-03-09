@@ -1,6 +1,7 @@
 ﻿using BracketMaster.Logic;
 using BracketMaster.Models;
 using BracketMaster.Repository;
+using BracketMaster.Repository.Repositories;
 using BracketMaster.Service;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,30 +12,48 @@ namespace BracketMaster.TestConsole
         static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-                
+
                 .AddScoped<BracketMasterDbContext>()
 
                 .AddScoped<ITournamentRepository<BeerpongTournament>, BeerpongTournamentRepository>()
                 .AddScoped<IPlayerRepository<BeerpongPlayer>, BeerpongPlayerRepository>()
+                .AddScoped<IMatchRepository<BeerpongMatch>, BeerpongMatchRepository>()
+                .AddScoped<IGroupRepository<BeerpongGroup>, BeerpongGroupRepository>()
 
+                // Logics
                 .AddScoped<ITournamentLogic<BeerpongTournament>, BeerpongTournamentLogic>()
                 .AddScoped<IPlayerLogic<BeerpongPlayer>, BeerpongPlayerLogic>()
+                .AddScoped<IMatchLogic<BeerpongMatch>, BeerpongMatchLogic>()
+                .AddScoped<IGroupLogic<BeerpongGroup>, BeerpongGroupLogic>()
+
+                // Preliminary Logics
                 .AddScoped<GroupsLogic>()
                 .AddScoped<RandomEnemyLogic>()
                 .AddScoped<SwissLogic>()
                 .AddScoped<RoundRobinLogic>()
-                .AddScoped<PreliminaryHandlerFactory>()
+
+                // Knockout Logics
                 .AddScoped<NoneEleminationLogic>()
                 .AddScoped<SingleEleminationLogic>()
                 .AddScoped<DoubleEleminationLogic>()
                 .AddScoped<TripleEleminationLogic>()
+
+                // Factories
+                .AddScoped<PreliminaryHandlerFactory>()
                 .AddScoped<KnockoutHandlerFactory>()
-                .AddScoped(typeof(ITournamentService<>), typeof(TournamentService<>))
+
+                // Services
+
+                .AddScoped(typeof(ITournamentService<,>), typeof(TournamentService<,>))
                 .AddScoped(typeof(IPlayerService<>), typeof(PlayerService<>))
+                .AddScoped(typeof(IMatchService<>), typeof(MatchService<>))
+                .AddScoped(typeof(IGroupService<,>), typeof(GroupService<,>))
+
                 .BuildServiceProvider();
 
-            var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament>>();
+            var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament,BeerpongPlayer>>();
             var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer>>();
+            var bpGroupService = serviceProvider.GetRequiredService<IGroupService<BeerpongGroup,BeerpongPlayer>>();
 
             // initialize db data
             var ctx = serviceProvider.GetRequiredService<BracketMasterDbContext>();
@@ -86,15 +105,14 @@ namespace BracketMaster.TestConsole
             bpService.AddPlayer(1, 3);
             bpService.AddPlayer(1, 4);
 
-            // player adása bajnoksághoz
-            //bpTLogic.AddPlayer(1, 1);
-            //bpTLogic.AddPlayer(1, 2);
-            //bpTLogic.AddPlayer(1, 3);
-            //bpTLogic.AddPlayer(1, 4);
+            BeerpongGroup bpG1 = new BeerpongGroup() { Name = "A csoport", TournamentId = 1 };
+            bpGroupService.Create(bpG1);
 
-            //ITournamentRepository<BeerpongTournament> bpTournamentRepo = new BeerpongTournamentRepository(ctx);
+            bpGroupService.AddPlayer(1, 1);
+            bpGroupService.AddPlayer(1, 2);
+            bpGroupService.AddPlayer(1, 3);
 
-            //tournamentService.StartTournament(1);
+            bpService.Delete(1);
         }
     }
 }

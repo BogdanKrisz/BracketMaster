@@ -22,27 +22,64 @@ namespace BracketMaster.Service
 
         public void Create(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _matchLogic.Validate(item);
+                _matchRepository.Create(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _matchRepository.Delete(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public T Read(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _matchRepository.Read(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public IQueryable<T> ReadAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _matchRepository.ReadAll();
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _matchLogic.Validate(item);
+                _matchRepository.Update(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
