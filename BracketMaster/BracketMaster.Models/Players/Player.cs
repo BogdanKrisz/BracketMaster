@@ -29,6 +29,9 @@ namespace BracketMaster.Models
         public abstract int Points { get; }
 
         [NotMapped]
+        public int NumOfPlayedGames { get => HomeMatches.Count + AwayMatches.Count; }
+
+        [NotMapped]
         public ICollection<Player> PreviousOpponents 
         { 
             get 

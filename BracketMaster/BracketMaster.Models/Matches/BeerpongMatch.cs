@@ -19,10 +19,5 @@ namespace BracketMaster.Models
         {
             
         }
-
-        public BeerpongMatch(int tournamentId, int homeId, int awayId, int round) : base(tournamentId, homeId, awayId, round)
-        {
-
-        }
     }
 }

@@ -20,10 +20,32 @@ namespace BracketMaster.Service
             _matchLogic = matchLogic;
         }
 
+
+        public void SetResult(int round, int homeId, int awayId, int homeScore, int awayScore)
+        {
+            var match = _matchRepository
+                            .ReadAll()
+                            .FirstOrDefault(m => m.Round == round && m.HomeId == homeId && m.AwayId == awayId);
+
+            if (match == null) throw new Exception("Match not found");
+
+            SetResult(match.Id, homeScore, awayScore);
+        }
+
+        public void SetResult(int matchId, int homeScore, int awayScore)
+        {
+            var match = _matchRepository.Read(matchId);
+            if (match == null) throw new Exception("Match not found");
+
+            match.SetResult(homeScore, awayScore);
+            _matchRepository.Update(match);
+        }
+
         public void Create(T item)
         {
             try
             {
+                // megkéne nézni, valszeg a validate-ben, hogy a playernek a tournamentje és a matchnek a tournamentje megegyezik e
                 _matchLogic.Validate(item);
                 _matchRepository.Create(item);
             }

@@ -13,6 +13,7 @@ namespace BracketMaster.Models
         public BeerpongGroup()
         {
             Players = new HashSet<Player>(new HashSet<BeerpongPlayer>());
+            Matches = new HashSet<Match>(new HashSet<BeerpongMatch>());
         }
     }
 }

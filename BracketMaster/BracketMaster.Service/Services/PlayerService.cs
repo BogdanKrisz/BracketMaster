@@ -9,16 +9,30 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public class PlayerService<T> : IPlayerService<T> where T : Player
+    public class PlayerService<T, G, M> : IPlayerService<T, G, M>
+        where T : Player
+        where G : Group
+        where M : Match
     {
         readonly IPlayerRepository<T> _playerRepository;
         readonly IPlayerLogic<T> _playerLogic;
 
-        public PlayerService(IPlayerRepository<T> playerRepository, IPlayerLogic<T> playerLogic)
+        readonly IGroupService<G> _groupService;
+        readonly IMatchService<M> _matchService;
+
+        public PlayerService(
+            IPlayerRepository<T> playerRepository,
+            IPlayerLogic<T> playerLogic,
+            IGroupService<G> groupService,
+            IMatchService<M> matchService)
         {
             _playerRepository = playerRepository;
             _playerLogic = playerLogic;
+            _matchService = matchService;
+            _groupService = groupService;
         }
+
+
 
         public void Create(T item)
         {

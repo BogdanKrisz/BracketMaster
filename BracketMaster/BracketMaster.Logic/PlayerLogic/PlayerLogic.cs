@@ -17,7 +17,8 @@ namespace BracketMaster.Logic
 
         public virtual void Validate(T item)
         {
-            
+            // NE LEGYEN 2 azonos név 1 tournamentben!!
+            //throw new NotImplementedException();
         }
     }
 }

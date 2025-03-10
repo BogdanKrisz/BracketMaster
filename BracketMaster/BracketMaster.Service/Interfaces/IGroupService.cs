@@ -8,10 +8,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public interface IGroupService<T, K> : IBasicService<T> 
-        where T : Group
-        where K : Player
+    public interface IGroupService<T> : IBasicService<T> where T : Group
     {
-        void AddPlayer(int groupId, int playerId);
     }
 }

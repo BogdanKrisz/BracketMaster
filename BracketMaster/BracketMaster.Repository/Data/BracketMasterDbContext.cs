@@ -84,19 +84,34 @@ namespace BracketMaster.Repository
                 .HasForeignKey(p => p.GroupId)
                 .OnDelete(DeleteBehavior.Restrict));
 
+            // Match -> Group
+            modelBuilder.Entity<Group>(x => x
+                .HasMany(g => g.Players)
+                .WithOne(p => p.Group)
+                .HasForeignKey(p => p.GroupId)
+                .OnDelete(DeleteBehavior.Restrict));
+
+            // Match -> Group
+            modelBuilder.Entity<Match>(x => x
+                .HasOne(m => m.Group)
+                .WithMany(g => g.Matches)
+                .HasForeignKey(m => m.GroupId)
+                .OnDelete(DeleteBehavior.Restrict));
+
             // Match -> HomeMatches
             modelBuilder.Entity<Match>(x => x
                 .HasOne(m => m.Home)
                 .WithMany(p => p.HomeMatches)
                 .HasForeignKey(m => m.HomeId)
-                .OnDelete(DeleteBehavior.Restrict));
+                .OnDelete(DeleteBehavior.Cascade));
 
             // Match -> AwayMathes
             modelBuilder.Entity<Match>(x => x
                 .HasOne(m => m.Away)
                 .WithMany(p => p.AwayMatches)
                 .HasForeignKey(m => m.AwayId)
-                .OnDelete(DeleteBehavior.Restrict));
+                .OnDelete(DeleteBehavior.Cascade));
+
         }
     }
 }

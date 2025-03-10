@@ -9,6 +9,7 @@ namespace BracketMaster.Logic
 {
     public abstract class GroupLogic<T> : IGroupLogic<T> where T : Group
     {
+        // !!!! fontos !!! - először grouppokat kell majd létrehozni, bele embereket és csak aztán jöhetnek a meccsek a tournamentekbe (ha van csoport már és benne az emberek, akkor a groupba is beleteszi a meccset)
         protected GroupLogic()
         {
 

@@ -30,6 +30,10 @@ namespace BracketMaster.Models
         public virtual bool IsFinished { get; set; }
 
         [NotMapped]
+        public virtual Group? Group { get; set; }
+        public int? GroupId { get; set; }
+
+        [NotMapped]
         public virtual Player Winner 
         {
             get 
@@ -45,14 +49,6 @@ namespace BracketMaster.Models
         protected Match()
         {
             
-        }
-
-        protected Match(int tournamentId, int homeId, int awayId, int round)
-        {
-            TournamentId = tournamentId;
-            HomeId = homeId;
-            AwayId = awayId;
-            Round = round;
         }
 
         public virtual void SetResult(int homeScore, int awayScore)

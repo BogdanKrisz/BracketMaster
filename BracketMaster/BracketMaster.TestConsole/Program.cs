@@ -44,16 +44,16 @@ namespace BracketMaster.TestConsole
 
                 // Services
 
-                .AddScoped(typeof(ITournamentService<,>), typeof(TournamentService<,>))
-                .AddScoped(typeof(IPlayerService<>), typeof(PlayerService<>))
+                .AddScoped(typeof(ITournamentService<,,,>), typeof(TournamentService<,,,>))
+                .AddScoped(typeof(IPlayerService<,,>), typeof(PlayerService<,,>))
                 .AddScoped(typeof(IMatchService<>), typeof(MatchService<>))
-                .AddScoped(typeof(IGroupService<,>), typeof(GroupService<,>))
+                .AddScoped(typeof(IGroupService<>), typeof(GroupService<>))
 
                 .BuildServiceProvider();
 
-            var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament,BeerpongPlayer>>();
-            var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer>>();
-            var bpGroupService = serviceProvider.GetRequiredService<IGroupService<BeerpongGroup,BeerpongPlayer>>();
+            var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament,BeerpongPlayer,BeerpongGroup,BeerpongMatch>>();
+            var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer,BeerpongGroup,BeerpongMatch>>();
+            var matchService = serviceProvider.GetRequiredService<IMatchService<BeerpongMatch>>();
 
             // initialize db data
             var ctx = serviceProvider.GetRequiredService<BracketMasterDbContext>();
@@ -99,20 +99,44 @@ namespace BracketMaster.TestConsole
             pService.Create(p3);
             pService.Create(p4);
 
-
-            bpService.AddPlayer(1, 1);
-            bpService.AddPlayer(1, 2);
-            bpService.AddPlayer(1, 3);
-            bpService.AddPlayer(1, 4);
+            bpService.AddPlayerToTournament(1, 1);
+            bpService.AddPlayerToTournament(1, 2);
+            bpService.AddPlayerToTournament(1, 3);
+            bpService.AddPlayerToTournament(1, 4);
 
             BeerpongGroup bpG1 = new BeerpongGroup() { Name = "A csoport", TournamentId = 1 };
-            bpGroupService.Create(bpG1);
+            BeerpongGroup bpG2 = new BeerpongGroup() { Name = "B csoport", TournamentId = 1 };
 
-            bpGroupService.AddPlayer(1, 1);
-            bpGroupService.AddPlayer(1, 2);
-            bpGroupService.AddPlayer(1, 3);
+            bpService.CreateGroup(bpG1);
+            bpService.CreateGroup(bpG2);
 
-            bpService.Delete(1);
+            bpService.AddPlayerToGroup(1, 1);
+            bpService.AddPlayerToGroup(1, 2);
+
+            bpService.AddPlayerToGroup(2, 3);
+            bpService.AddPlayerToGroup(2, 4);
+
+            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 1, AwayId = 2 });
+            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 3, AwayId = 4 });
+
+            bpService.AddMatchToTournament(1, 1);
+            bpService.AddMatchToTournament(1, 2);
+
+            matchService.SetResult(1, 10, 8);
+            matchService.SetResult(2, 18, 19);
+
+            bpService.RemovePlayerFromTournament(1, "Krisz");
+            bpService.RemovePlayerFromTournament(2);
+
+            bpService.RemovePlayerFromGroup(3, 2);
+
+            // Grouppoknál meccsek kiírása ??
+            // grouppoknál playerek kiírása ??
+
+
+
+            // csoportoknál a ranglista alapú egyenes kiesésnél 
+            // jó lenne egy feature, ahol alapból beállított meccs számig megy a preliminary, de van egy gomb arra, hogy generáljon +ba kört minden kör végén
         }
     }
 }
