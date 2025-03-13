@@ -43,17 +43,102 @@ namespace BracketMaster.Service
             _preliminaryHandlerFactory = preliminaryHandlerFactory;
         }
 
-        // Player tournamenthez adása
-        // Group tournamenthez adása (ha van group) (bajnokság indításakor elég meghívni )
-        // Player Grouphoz adása
-        // Match tournamenthez adása + Match Grouphoz adása (ha van group)
-        // játékosok elosztása csoportokba (ha van group)
-        // csoport generálása és tournamenthez adása
+        #region CRUD
 
+        public void Create(T item)
+        {
+            try
+            {
+                _tournamentLogic.Validate(item);
+                _tournamentRepository.Create(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
+        public T Read(int id)
+        {
+            try
+            {
+                return _tournamentRepository.Read(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        // -- Grouppoknál meccsek kiírása
-        // grouppoknál playerek kiírása
+        public IQueryable<T> ReadAll()
+        {
+            try
+            {
+                return _tournamentRepository.ReadAll();
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Update(T item)
+        {
+            try
+            {
+                _tournamentLogic.Validate(item);
+                _tournamentRepository.Update(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            try
+            {
+                _tournamentRepository.Delete(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        // logic rétegbe átszervezések
+        // esetleg logicoknak egy közös interfész amelyben pl a validate-t kötelezővé tesszük
+
+        // bajnokság logikák kialakítása
+
+        // szerintem egy regisztráció kellene a készítőknek -> token rendszert áthozni?
+        // jó lenne áthozni logger rendszert
+        // catch részek megírása
+
+        // jó lenne ha a játékosok is láthatnák a bajnokságot meg a rendszert, csak ne írhassanak bele nyilván (de ez frontend story lesz)
+
+        #region NON-CRUD
+
+        #region Tournament
+
+        public int GetTournamentId(string name)
+        {
+            try
+            {
+                // Plussz itt az ownert is kéne nézni
+                var tournament = _tournamentRepository.ReadAll().FirstOrDefault(t => t.Name == name);
+                if (tournament == null) throw new Exception("Tournament not found");
+
+                return tournament.Id;
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public void AddPlayerToTournament(int tournamentId, int playerId)
         {
@@ -89,99 +174,6 @@ namespace BracketMaster.Service
             }
         }
 
-        public void RemovePlayerFromTournament(int tournamentId, string playerName)
-        {
-            try
-            {
-                var tournament = _tournamentRepository.Read(tournamentId);
-                if (tournament == null) throw new Exception("Tournament not found");
-
-                var player = _playerService.ReadAll().FirstOrDefault(p => p.TournamentId == tournamentId && p.Name == playerName);
-                if (player == null) throw new Exception("Player not found in this tournament");
-
-                RemovePlayerFromTournament(player.Id);
-            }
-            catch (Exception e)
-            {
-                throw new NotImplementedException();
-            }
-        }
-        
-        public int GetGroupId(int tournamentId, string groupName)
-        {
-            try
-            {
-                var tournament = _tournamentRepository.Read(tournamentId);
-                if (tournament == null) throw new Exception("Tournament not found");
-
-                var group = _groupService.ReadAll().FirstOrDefault(g => g.TournamentId == tournamentId && g.Name == groupName);
-                if (group == null) throw new Exception("Group not found in this tournament");
-
-                return group.Id;
-            }
-            catch (Exception e)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void AddPlayerToGroup(int groupId, int playerId)
-        {
-            try
-            {
-                var group = _groupService.Read(groupId);
-                if (group == null) throw new Exception("Group not found");
-
-                var player = _playerService.Read(playerId);
-                if (player == null) throw new Exception("Player not found");
-
-                // EZT ÁT EGY LOGICBA
-                if (player.GroupId.HasValue)
-                    throw new Exception("This player is already in a group");
-
-                player.GroupId = groupId;
-                _playerService.Update(player);
-            }
-            catch (Exception e)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void RemovePlayerFromGroup(int groupId, int playerId)
-        {
-            try
-            {
-                var group = _groupService.Read(groupId);
-                if (group == null) throw new Exception("Group not found");
-
-                var player = _playerService.Read(playerId);
-                if (player == null) throw new Exception("Player not found");
-
-                // EZT ÁT LOGICBA
-                if (player.GroupId != groupId)
-                    throw new Exception("Player isnt part of this group");
-
-                player.GroupId = null;
-                _playerService.Update(player);
-            }
-            catch (Exception e)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int GetMatchId(int tournamentId, int homePlayerId, int awayPlayerId, int round)
-        {
-            var tournament = _tournamentRepository.Read(tournamentId);
-            if (tournament == null) throw new Exception("Tournament not found");
-
-            var match = _matchService.ReadAll().FirstOrDefault(m => m.TournamentId == tournamentId && m.HomeId == homePlayerId && m.AwayId == awayPlayerId);
-            if (match == null) throw new Exception("Match not found");
-
-            return match.Id;
-        }
-
         public void AddMatchToTournament(int tournamentId, int matchId)
         {
             try
@@ -207,41 +199,6 @@ namespace BracketMaster.Service
                 throw new NotImplementedException();
             }
         }
-
-        public void DeleteMatch(int matchId)
-        {
-            _matchService.Delete(matchId);
-        }
-
-        public void DeleteMatch(int tournamentId, int roundNumber, int homeId, int awayId)
-        {
-            try
-            {
-                var tournament = _tournamentRepository.Read(tournamentId);
-                if (tournament == null) throw new Exception("Tournament not found");
-
-                var match = _matchService.ReadAll().FirstOrDefault(m => m.TournamentId == tournamentId && m.Round == roundNumber && m.HomeId == homeId && m.AwayId == awayId);
-                if (match == null) throw new Exception("Match not found");
-
-                DeleteMatch(match.Id);
-            }
-            catch (Exception e)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-        public void CreateGroup(G group)
-        {
-            _groupService.Create(group);
-        }
-
-        public void CreateMatch(M match)
-        {
-            _matchService.Create(match);
-        }
-
 
         public void StartTournament(int tournamentId)
         {
@@ -305,13 +262,21 @@ namespace BracketMaster.Service
                 throw new NotImplementedException();
             }
         }
+        #endregion
 
-        public void Create(T item)
+        #region Group
+
+        public int GetGroupId(int tournamentId, string groupName)
         {
             try
             {
-                _tournamentLogic.Validate(item);
-                _tournamentRepository.Create(item);
+                var tournament = _tournamentRepository.Read(tournamentId);
+                if (tournament == null) throw new Exception("Tournament not found");
+
+                var group = _groupService.ReadAll().FirstOrDefault(g => g.TournamentId == tournamentId && g.Name == groupName);
+                if (group == null) throw new Exception("Group not found in this tournament");
+
+                return group.Id;
             }
             catch (Exception e)
             {
@@ -319,11 +284,11 @@ namespace BracketMaster.Service
             }
         }
 
-        public T Read(int id)
+        public void CreateGroup(G group)
         {
             try
             {
-                return _tournamentRepository.Read(id);
+                _groupService.Create(group);
             }
             catch (Exception e)
             {
@@ -331,11 +296,11 @@ namespace BracketMaster.Service
             }
         }
 
-        public IQueryable<T> ReadAll()
+        public void UpdateGroup(G group)
         {
             try
             {
-                return _tournamentRepository.ReadAll();
+                _groupService.Update(group);
             }
             catch (Exception e)
             {
@@ -343,12 +308,11 @@ namespace BracketMaster.Service
             }
         }
 
-        public void Update(T item)
+        public void DeleteGroup(int groupId)
         {
             try
             {
-                _tournamentLogic.Validate(item);
-                _tournamentRepository.Update(item);
+                _groupService.Delete(groupId);
             }
             catch (Exception e)
             {
@@ -356,16 +320,155 @@ namespace BracketMaster.Service
             }
         }
 
-        public void Delete(int id)
+        public void AddPlayerToGroup(int groupId, int playerId)
         {
             try
             {
-                _tournamentRepository.Delete(id);
+                var group = _groupService.Read(groupId);
+                if (group == null) throw new Exception("Group not found");
+
+                var player = _playerService.Read(playerId);
+                if (player == null) throw new Exception("Player not found");
+
+                // EZT ÁT EGY LOGICBA
+                if (player.GroupId.HasValue)
+                    throw new Exception("This player is already in a group");
+
+                player.GroupId = groupId;
+                _playerService.Update(player);
             }
             catch (Exception e)
             {
                 throw new NotImplementedException();
-            } 
+            }
         }
+
+        public void RemovePlayerFromGroup(int playerId)
+        {
+            try
+            {
+                var player = _playerService.Read(playerId);
+                if (player == null) throw new Exception("Player not found");
+
+                // EZT ÁT LOGICBA
+                if (!player.GroupId.HasValue)
+                    throw new Exception("Player isnt part of a group");
+
+                player.GroupId = null;
+                _playerService.Update(player);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        #region Match
+
+        public int GetMatchId(int tournamentId, int homePlayerId, int awayPlayerId, int round)
+        {
+            try
+            {
+                var tournament = _tournamentRepository.Read(tournamentId);
+                if (tournament == null) throw new Exception("Tournament not found");
+
+                var match = _matchService.ReadAll().FirstOrDefault(m => m.TournamentId == tournamentId && m.HomeId == homePlayerId && m.AwayId == awayPlayerId);
+                if (match == null) throw new Exception("Match not found");
+
+                return match.Id;
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void CreateMatch(M match)
+        {
+            try
+            {
+                _matchService.Create(match);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void UpdateMatch(M match)
+        {
+            try
+            {
+                _matchService.Update(match);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void DeleteMatch(int matchId)
+        {
+            try
+            {
+                _matchService.Delete(matchId);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void SetMatchResult(int matchId, int homeScore, int awayScore)
+        {
+            try
+            {
+                _matchService.SetResult(matchId, homeScore, awayScore);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        #region Player
+
+        public int GetPlayerId(int tournamentId, string playerName)
+        {
+            try
+            {
+                var tournament = _tournamentRepository.Read(tournamentId);
+                if (tournament == null) throw new Exception("Tournament not found");
+
+                var player = _playerService.ReadAll().FirstOrDefault(p => p.TournamentId == tournamentId && p.Name == playerName);
+                if (player == null) throw new Exception("Player not found in this tournament");
+
+                return player.Id;
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void UpdatePlayer(P player)
+        {
+            try
+            {
+                _playerService.Update(player);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
+        #endregion
     }
 }
