@@ -31,7 +31,7 @@ namespace BracketMaster.Logic
 
         public bool VerifyPassword(string givenPassword, string storedHash)
         {
-            var parts = storedHash.Split('.');
+            var parts = storedHash.Split(':');
             if (parts.Length != 3 ) 
                 return false;
 

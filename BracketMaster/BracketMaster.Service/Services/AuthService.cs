@@ -17,10 +17,13 @@ namespace BracketMaster.Service
         readonly IRepository<RefreshToken> _refreshTokenRepository;
         readonly ITokenService _tokenService;
 
-        public AuthService(IRepository<Owner> ownerRepository, IAuthLogic authLogic)
+        readonly IPasswordHasher _passwordHasher;
+
+        public AuthService(IRepository<Owner> ownerRepository, IAuthLogic authLogic, IPasswordHasher passwordHasher)
         {
             _ownerRepository = ownerRepository;
             _authLogic = authLogic;
+            _passwordHasher = passwordHasher;
         }
 
         #region CRUD
@@ -61,6 +64,18 @@ namespace BracketMaster.Service
             }
         }
 
+        public Owner Read(string username)
+        {
+            try
+            {
+                return _ownerRepository.ReadAll().FirstOrDefault(x => x.Username == username);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public IQueryable<Owner> ReadAll()
         {
             try
@@ -88,11 +103,38 @@ namespace BracketMaster.Service
         #endregion
 
         #region NON-CRUD
-        public bool isAlreadyInUse(string username)
+        public void RegisterOwner(RegisterModel newUser)
         {
             try
             {
-                
+                // logic helye..
+
+                Owner owner = new()
+                {
+                    Username = newUser.Username,
+                    Email = newUser.Email
+                };
+
+                var passwordHash = _passwordHasher.HashPassword(newUser.Password);
+                var parts = passwordHash.Split(':');
+                owner.HashedPassword = parts[0];
+                owner.PasswordSalt = parts[1];
+                owner.IterationCount = parts[2];
+
+                _ownerRepository.Create(owner);
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        
+        public bool usernameAlreadyInUse(string username)
+        {
+            try
+            {
+                Owner owner = Read(username);
+                return owner != null;
             }
             catch (Exception e)
             {
@@ -100,11 +142,15 @@ namespace BracketMaster.Service
             }
         }
 
-        public bool ValidateUser(string username, string password)
+        public bool ValidateUser(string username, string givenPassword)
         {
             try
             {
+                Owner owner = Read(username);
+                if (owner != null) throw new Exception("Owner not found!");
 
+                string storedHash = $"{owner.HashedPassword}:{owner.PasswordSalt}:{owner.IterationCount}";
+                return owner != null && _passwordHasher.VerifyPassword(givenPassword, storedHash);
             }
             catch (Exception e)
             {
@@ -112,11 +158,22 @@ namespace BracketMaster.Service
             }
         }
 
-        public void UpdateUsersRefreshToken(string refreshToken)
+        public void UpdateUsersRefreshToken(RefreshToken newToken, Owner owner)
         {
             try
             {
-
+                if(owner.RefreshToken == null)
+                {
+                    newToken.OwnerId = owner.Id;
+                    _refreshTokenRepository.Create(newToken);
+                }
+                else
+                {
+                    RefreshToken oldRefreshToken = _refreshTokenRepository.Read((int)owner.RefreshTokenId);
+                    oldRefreshToken.Token = newToken.Token;
+                    oldRefreshToken.Expiration = newToken.Expiration;
+                    _refreshTokenRepository.Update(oldRefreshToken);
+                }
             }
             catch (Exception e)
             {
@@ -124,11 +181,15 @@ namespace BracketMaster.Service
             }
         }
 
-        public Owner GetUserFromHttpHeader(string? header)
+        public Owner GetOwnerFromHttpHeader(string? header)
         {
             try
             {
-
+                var token = header.Substring("Bearer ".Length).Trim();
+                string username = _tokenService.GetUsernameFromToken(token);
+                Owner owner = ReadAll().FirstOrDefault(u => u.Username == username);
+                if (owner == null) throw new Exception("Owner not found");
+                return owner;
             }
             catch (Exception e)
             {
