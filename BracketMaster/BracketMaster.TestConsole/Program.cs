@@ -133,10 +133,10 @@ namespace BracketMaster.TestConsole
             matchService.SetResult(1, 10, 8);
             matchService.SetResult(2, 18, 19);
 
-            bpService.RemovePlayerFromTournament(1, "Krisz");
+            bpService.RemovePlayerFromTournament(1);
             bpService.RemovePlayerFromTournament(2);
 
-            bpService.RemovePlayerFromGroup(3, 2);
+            bpService.RemovePlayerFromGroup(3);
 
             // Grouppoknál meccsek kiírása ??
             // grouppoknál playerek kiírása ??

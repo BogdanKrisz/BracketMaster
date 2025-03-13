@@ -13,32 +13,31 @@ namespace BracketMaster.Models
     public class Owner : Entity, IOwner
     {
         [Required]
-        [StringLength(250)]
+        [StringLength(256)]
         [Column("username")]
         public string Username { get; set; }
 
-        [Required]
-        [NotMapped]
-        [StringLength(250)]
-        public string? Password { get; set; }
-
         [JsonIgnore]
-        [StringLength(250)]
+        [StringLength(44)]
         [Column("hashed_password")]
-        public string? HashedPassword { get; set; }
+        public string HashedPassword { get; set; }
 
         [JsonIgnore]
-        [StringLength(32)]
+        [StringLength(24)]
         [Column("password_salt")]
-        public string? PasswordSalt { get; set; }
+        public string PasswordSalt { get; set; }
+
+        [JsonIgnore]
+        [StringLength(10)]
+        [Column("iteration_count")]
+        public string IterationCount { get; set; }
 
         [Required]
-        [StringLength(250)]
+        [StringLength(256)]
         [Column("email")]
         public string Email { get; set; }
 
         [JsonIgnore]
-        [StringLength(250)]
         [Column("refresh_token_id")]
         public int? RefreshTokenId { get; set; }
 
