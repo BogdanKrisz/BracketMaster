@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Repository
 {
-    public interface IOwnerRepository : IRepository<Owner>
+    public class RefreshTokenRepository : Repository<RefreshToken>, IRepository<RefreshToken>
     {
+        public RefreshTokenRepository(BracketMasterDbContext ctx) : base(ctx)
+        {
+        }
     }
 }

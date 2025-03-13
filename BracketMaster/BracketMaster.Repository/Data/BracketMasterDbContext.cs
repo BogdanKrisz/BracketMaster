@@ -11,6 +11,7 @@ namespace BracketMaster.Repository
     public class BracketMasterDbContext : DbContext
     {
         public DbSet<Owner> Owners { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public DbSet<PreliminarySystem> PreliminarySystems { get; set; }
         public DbSet<KnockoutSystem> KnockoutSystems { get; set; }
@@ -44,7 +45,14 @@ namespace BracketMaster.Repository
             modelBuilder.Entity<Match>().UseTpcMappingStrategy();
             modelBuilder.Entity<Group>().UseTpcMappingStrategy();
 
-            // Owner -> Tournaments
+            // Owner -> RefreshTokens
+            modelBuilder.Entity<Owner>()
+                .HasOne(o => o.RefreshToken)
+                .WithOne(rf => rf.Owner)
+                .HasForeignKey<RefreshToken>(rf => rf.OwnerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Tournament -> Owner
             modelBuilder.Entity<Tournament>()
                 .HasOne(t => t.Owner)
                 .WithMany(o => o.Tournaments)

@@ -15,10 +15,14 @@ namespace BracketMaster.TestConsole
 
                 .AddScoped<BracketMasterDbContext>()
 
+                // repos
                 .AddScoped<ITournamentRepository<BeerpongTournament>, BeerpongTournamentRepository>()
                 .AddScoped<IPlayerRepository<BeerpongPlayer>, BeerpongPlayerRepository>()
                 .AddScoped<IMatchRepository<BeerpongMatch>, BeerpongMatchRepository>()
                 .AddScoped<IGroupRepository<BeerpongGroup>, BeerpongGroupRepository>()
+
+                .AddScoped<IRepository<Owner>, OwnerRepository>()
+                .AddScoped<IRepository<RefreshToken>, RefreshTokenRepository>()
 
                 // Logics
                 .AddScoped<ITournamentLogic<BeerpongTournament>, BeerpongTournamentLogic>()
@@ -48,6 +52,10 @@ namespace BracketMaster.TestConsole
                 .AddScoped(typeof(IPlayerService<,,>), typeof(PlayerService<,,>))
                 .AddScoped(typeof(IMatchService<>), typeof(MatchService<>))
                 .AddScoped(typeof(IGroupService<>), typeof(GroupService<>))
+
+                // tokenService
+                //.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+                .AddScoped<ITokenService, TokenService>()
 
                 .BuildServiceProvider();
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
+    [Table("Owners")]
     public class Owner : Entity, IOwner
     {
         [Required]
@@ -36,7 +37,6 @@ namespace BracketMaster.Models
         [Column("email")]
         public string Email { get; set; }
 
-        /*
         [JsonIgnore]
         [StringLength(250)]
         [Column("refresh_token_id")]
@@ -45,13 +45,29 @@ namespace BracketMaster.Models
         [JsonIgnore]
         [NotMapped]
         public virtual RefreshToken? RefreshToken { get; set; }
-        */
 
         public ICollection<Tournament> Tournaments { get; set; }
 
         public Owner()
         {
             Tournaments = new HashSet<Tournament>();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !this.GetType().Equals(obj.GetType()))
+                return false;
+
+            Owner otherOwner = obj as Owner;
+            Owner thisOwner = this;
+            return otherOwner.Id == thisOwner.Id &&
+                otherOwner.Username == thisOwner.Username &&
+                otherOwner.Email == thisOwner.Email;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Username, Email);
         }
     }
 }

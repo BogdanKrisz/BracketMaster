@@ -11,60 +11,129 @@ namespace BracketMaster.Service
 {
     public class AuthService : IAuthService<Owner>
     {
-        readonly IOwnerRepository _ownerRepository;
+        readonly IRepository<Owner> _ownerRepository;
         readonly IAuthLogic _authLogic;
+        
+        readonly IRepository<RefreshToken> _refreshTokenRepository;
+        readonly ITokenService _tokenService;
 
-        public AuthService()
+        public AuthService(IRepository<Owner> ownerRepository, IAuthLogic authLogic)
         {
-            
+            _ownerRepository = ownerRepository;
+            _authLogic = authLogic;
         }
 
         #region CRUD
         public void Create(Owner item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _authLogic.Validate(item);
+                _ownerRepository.Create(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _ownerRepository.Delete(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public Owner Read(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _ownerRepository.Read(id);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public IQueryable<Owner> ReadAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _ownerRepository.ReadAll();
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Update(Owner item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _authLogic.Validate(item);
+                _ownerRepository.Update(item);
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
         #endregion
 
         #region NON-CRUD
         public bool isAlreadyInUse(string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public bool ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void UpdateUsersRefreshToken(string refreshToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public Owner GetUserFromHttpHeader(string? header)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException();
+            }
         }
         #endregion
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Repository
 {
-    public class OwnerRepository : Repository<Owner>, IOwnerRepository
+    public class OwnerRepository : Repository<Owner>, IRepository<Owner>
     {
         public OwnerRepository(BracketMasterDbContext ctx) : base(ctx)
         {
