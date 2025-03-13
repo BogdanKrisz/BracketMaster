@@ -10,6 +10,8 @@ namespace BracketMaster.Repository
 {
     public class BracketMasterDbContext : DbContext
     {
+        public DbSet<Owner> Owners { get; set; }
+
         public DbSet<PreliminarySystem> PreliminarySystems { get; set; }
         public DbSet<KnockoutSystem> KnockoutSystems { get; set; }
 
@@ -41,6 +43,13 @@ namespace BracketMaster.Repository
             modelBuilder.Entity<Player>().UseTpcMappingStrategy();
             modelBuilder.Entity<Match>().UseTpcMappingStrategy();
             modelBuilder.Entity<Group>().UseTpcMappingStrategy();
+
+            // Owner -> Tournaments
+            modelBuilder.Entity<Tournament>()
+                .HasOne(t => t.Owner)
+                .WithMany(o => o.Tournaments)
+                .HasForeignKey(o => o.OwnerId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Tournament Preliminary
             modelBuilder.Entity<Tournament>()

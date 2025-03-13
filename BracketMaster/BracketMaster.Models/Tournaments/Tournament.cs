@@ -12,6 +12,10 @@ namespace BracketMaster.Models
         public string Name { get; set; }
 
         [NotMapped]
+        public virtual Owner Owner { get; set; }
+        public int OwnerId { get; set; }
+
+        [NotMapped]
         public virtual ICollection<Player> Players { get; set; }
 
         [NotMapped]
