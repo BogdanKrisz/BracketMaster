@@ -109,14 +109,15 @@ namespace BracketMaster.Service
 
         #endregion
 
-        // Nullable minden osztályba ami lehet null? 
         // átkéne írni a data annotations-t Fluent API -ra az onmodelcreatingbe
-        // logic rétegbe átszervezések
+        // logic rétegbe átszervezések (auth és token rendszer marad serviceben)
         // esetleg logicoknak egy közös interfész amelyben pl a validate-t kötelezővé tesszük
+        // logolás
+        // request result
+
 
         // bajnokság logikák kialakítása
 
-        // szerintem egy regisztráció kellene a készítőknek -> token rendszert áthozni?
         // jó lenne áthozni logger rendszert
         // catch részek megírása
 

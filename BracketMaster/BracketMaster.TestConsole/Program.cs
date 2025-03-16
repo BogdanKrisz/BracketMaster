@@ -29,6 +29,8 @@ namespace BracketMaster.TestConsole
                 .AddScoped<IPlayerLogic<BeerpongPlayer>, BeerpongPlayerLogic>()
                 .AddScoped<IMatchLogic<BeerpongMatch>, BeerpongMatchLogic>()
                 .AddScoped<IGroupLogic<BeerpongGroup>, BeerpongGroupLogic>()
+                .AddScoped<IAuthLogic, AuthLogic>()
+                .AddScoped<IPasswordHasher, PasswordHasher>()
 
                 // Preliminary Logics
                 .AddScoped<GroupsLogic>()

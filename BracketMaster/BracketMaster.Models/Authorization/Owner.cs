@@ -12,39 +12,27 @@ namespace BracketMaster.Models
     [Table("Owners")]
     public class Owner : Entity, IOwner
     {
-        [Required]
-        [StringLength(256)]
-        [Column("username")]
-        public string Username { get; set; }
+        public required string Username { get; set; } = string.Empty;
 
         [JsonIgnore]
-        [StringLength(44)]
-        [Column("hashed_password")]
-        public string HashedPassword { get; set; }
+        public required string PasswordHashed { get; set; } = string.Empty;
 
         [JsonIgnore]
-        [StringLength(24)]
-        [Column("password_salt")]
-        public string PasswordSalt { get; set; }
+        public required string PasswordSalt { get; set; } = string.Empty;
 
         [JsonIgnore]
-        [StringLength(10)]
-        [Column("iteration_count")]
-        public string IterationCount { get; set; }
+        public required int PasswordIterationCount { get; set; } = 0;
 
-        [Required]
-        [StringLength(256)]
-        [Column("email")]
-        public string Email { get; set; }
+        public required string Email { get; set; } = string.Empty;
 
         [JsonIgnore]
-        [Column("refresh_token_id")]
         public int? RefreshTokenId { get; set; }
 
         [JsonIgnore]
         [NotMapped]
         public virtual RefreshToken? RefreshToken { get; set; }
 
+        [NotMapped]
         public ICollection<Tournament> Tournaments { get; set; }
 
         public Owner()

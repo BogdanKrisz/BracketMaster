@@ -45,19 +45,44 @@ namespace BracketMaster.Repository
             modelBuilder.Entity<Match>().UseTpcMappingStrategy();
             modelBuilder.Entity<Group>().UseTpcMappingStrategy();
 
-            // Owner -> RefreshTokens
-            modelBuilder.Entity<Owner>()
-                .HasOne(o => o.RefreshToken)
-                .WithOne(rf => rf.Owner)
-                .HasForeignKey<RefreshToken>(rf => rf.OwnerId)
-                .OnDelete(DeleteBehavior.Cascade);
 
-            // Tournament -> Owner
-            modelBuilder.Entity<Tournament>()
-                .HasOne(t => t.Owner)
-                .WithMany(o => o.Tournaments)
-                .HasForeignKey(o => o.OwnerId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Owner beállítása
+            modelBuilder.Entity<Owner>(entity =>
+            {
+                entity.Property(o => o.Username)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(o => o.PasswordHashed)
+                    .IsRequired()
+                    .HasMaxLength(88);
+
+                entity.Property(o => o.PasswordSalt)
+                    .IsRequired()
+                    .HasMaxLength(24);
+
+                entity.Property(o => o.PasswordIterationCount)
+                    .IsRequired()
+                    .HasMaxLength(6);
+
+                entity.Property(o => o.Email)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                // owner -> refreshToken
+                entity
+                    .HasOne(o => o.RefreshToken)
+                    .WithOne(rf => rf.Owner)
+                    .HasForeignKey<RefreshToken>(rf => rf.OwnerId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // owner -> tournament
+                entity
+                    .HasMany(o => o.Tournaments)
+                    .WithOne(t => t.Owner)
+                    .HasForeignKey(t => t.OwnerId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             // Tournament Preliminary
             modelBuilder.Entity<Tournament>()

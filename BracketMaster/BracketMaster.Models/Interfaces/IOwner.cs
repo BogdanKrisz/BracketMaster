@@ -5,9 +5,9 @@ namespace BracketMaster.Models
     {
         
         string Username { get; set; }
-        string HashedPassword { get; set; }
+        string PasswordHashed { get; set; }
         string PasswordSalt { get; set; }
-        string IterationCount { get; set; }
+        int PasswordIterationCount { get; set; }
 
         string Email { get; set; }
         
