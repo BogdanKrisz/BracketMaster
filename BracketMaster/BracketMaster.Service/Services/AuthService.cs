@@ -109,17 +109,17 @@ namespace BracketMaster.Service
             {
                 // logic helye..
 
+                var passwordHash = _passwordHasher.HashPassword(newUser.Password);
+                var parts = passwordHash.Split(':');
+
                 Owner owner = new()
                 {
                     Username = newUser.Username,
+                    PasswordHashed = parts[0],
+                    PasswordSalt = parts[1],
+                    PasswordIterationCount = int.Parse(parts[2]),
                     Email = newUser.Email
                 };
-
-                var passwordHash = _passwordHasher.HashPassword(newUser.Password);
-                var parts = passwordHash.Split(':');
-                owner.HashedPassword = parts[0];
-                owner.PasswordSalt = parts[1];
-                owner.IterationCount = parts[2];
 
                 _ownerRepository.Create(owner);
             }
@@ -149,7 +149,7 @@ namespace BracketMaster.Service
                 Owner owner = Read(username);
                 if (owner != null) throw new Exception("Owner not found!");
 
-                string storedHash = $"{owner.HashedPassword}:{owner.PasswordSalt}:{owner.IterationCount}";
+                string storedHash = $"{owner.PasswordHashed}:{owner.PasswordSalt}:{owner.PasswordIterationCount}";
                 return owner != null && _passwordHasher.VerifyPassword(givenPassword, storedHash);
             }
             catch (Exception e)

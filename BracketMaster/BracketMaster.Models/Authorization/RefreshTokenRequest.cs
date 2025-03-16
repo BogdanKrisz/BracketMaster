@@ -8,7 +8,7 @@ namespace BracketMaster.Models
 {
     public class RefreshTokenRequest
     {
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
+        public required string Token { get; set; } = string.Empty;
+        public required string RefreshToken { get; set; } = string.Empty;
     }
 }

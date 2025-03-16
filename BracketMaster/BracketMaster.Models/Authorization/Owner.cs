@@ -45,7 +45,7 @@ namespace BracketMaster.Models
             if (obj == null || !this.GetType().Equals(obj.GetType()))
                 return false;
 
-            Owner otherOwner = obj as Owner;
+            Owner otherOwner = (Owner)obj;
             Owner thisOwner = this;
             return otherOwner.Id == thisOwner.Id &&
                 otherOwner.Username == thisOwner.Username &&

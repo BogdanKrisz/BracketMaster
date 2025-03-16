@@ -47,7 +47,7 @@ namespace BracketMaster.Repository
 
 
             // Owner beállítása
-            modelBuilder.Entity<Owner>(entity =>
+            modelBuilder.Entity<Owner>(entity => 
             {
                 entity.Property(o => o.Username)
                     .IsRequired()
@@ -82,6 +82,24 @@ namespace BracketMaster.Repository
                     .WithOne(t => t.Owner)
                     .HasForeignKey(t => t.OwnerId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.Property(r => r.Token)
+                    .IsRequired();
+
+                entity.Property(rt => rt.Expiration)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<RefreshTokenRequest>(entity =>
+            {
+                entity.Property(r => r.Token)
+                    .IsRequired();
+
+                entity.Property(r => r.RefreshToken)
+                    .IsRequired();
             });
 
             // Tournament Preliminary
