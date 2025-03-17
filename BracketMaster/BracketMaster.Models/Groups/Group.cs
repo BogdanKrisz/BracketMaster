@@ -18,7 +18,6 @@ namespace BracketMaster.Models
 
         [NotMapped]
         public virtual ICollection<Player> Players { get; set; }
-
         [NotMapped]
         public virtual ICollection<Match> Matches { get; set; }
 

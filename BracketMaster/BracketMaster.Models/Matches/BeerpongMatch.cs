@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("Beerpong_Matches")]
     public class BeerpongMatch : Match, IBeerpongMatch
     {
         public override bool IsFinished { get { return HomeScore >= 10 || AwayScore >= 10; } }
+        
         public bool IsOverTime { get { return HomeScore >= 10 && AwayScore >= 10; } }
-
         public int CupDifference { get { return Math.Abs(HomeScore - AwayScore); } }
 
-        public BeerpongMatch()
-        {
-            
-        }
+        public BeerpongMatch() : base() { }
+
+        public BeerpongMatch(int homeId, int awayId) : base(homeId, awayId) { }
     }
 }

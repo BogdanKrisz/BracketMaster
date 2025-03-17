@@ -9,53 +9,56 @@ namespace BracketMaster.Models
 {
     public abstract class Match : Entity, IMatch
     {
+        public required int TournamentId { get; set; } = 0;
+
         [NotMapped]
-        public virtual Tournament Tournament { get; set; }
-        public int TournamentId { get; set; }
+        public virtual Tournament? Tournament { get; set; }
+        
 
         // number of round 
-        public int Round { get; set; }
+        public required int Round { get; set; } = 0;
+
+
+        public required int HomeId { get; set; } = 0;
 
         [NotMapped]
-        public virtual Player Home { get; set; }
-        public int HomeId { get; set; }
+        public virtual Player? Home { get; set; }
+
+
+        public required int AwayId { get; set; } = 0;
 
         [NotMapped]
-        public virtual Player Away { get; set; }
-        public int AwayId { get; set; }
+        public virtual Player? Away { get; set; }
 
-        public int HomeScore { get; set; }
-        public int AwayScore { get; set; }
 
-        public virtual bool IsFinished { get; set; }
+        public int HomeScore { get; set; } = 0;
+        public int AwayScore { get; set; } = 0;
+
+        public virtual bool IsFinished { get; }
+        
+        public int? WinnerId { get; set; }
 
         [NotMapped]
-        public virtual Group? Group { get; set; }
+        public virtual Player? Winner { get; set; }
+
         public int? GroupId { get; set; }
 
         [NotMapped]
-        public virtual Player Winner 
-        {
-            get 
-            {
-                if (!IsFinished)
-                    return null;
-                return HomeScore > AwayScore ? Home : Away;
-            } 
-        }
+        public virtual Group? Group { get; set; }
 
-        public int WinnerId { get; set; }
+        protected Match() { }
 
-        protected Match()
+        protected Match(int homeId, int awayId)
         {
-            
+            HomeId = homeId;
+            AwayId = awayId;
         }
 
         public virtual void SetResult(int homeScore, int awayScore)
         {
             this.HomeScore = homeScore;
             this.AwayScore = awayScore;
-            this.WinnerId = Winner.Id;
+            this.WinnerId = homeScore > awayScore ? HomeId : AwayId;
         }
     }
 }

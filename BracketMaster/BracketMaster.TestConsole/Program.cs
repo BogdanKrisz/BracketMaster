@@ -131,8 +131,8 @@ namespace BracketMaster.TestConsole
             bpService.AddPlayerToGroup(2, 3);
             bpService.AddPlayerToGroup(2, 4);
 
-            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 1, AwayId = 2 });
-            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 3, AwayId = 4 });
+            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 1, AwayId = 2, Round = 1 });
+            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 3, AwayId = 4, Round = 1});
 
             bpService.AddMatchToTournament(1, 1);
             bpService.AddMatchToTournament(1, 2);

@@ -42,8 +42,6 @@ namespace BracketMaster.Repository
             // TCP Mapping beállítása az osztályokra -> minden leszármazottnak saját táblája van
             modelBuilder.Entity<Tournament>().UseTpcMappingStrategy();
             modelBuilder.Entity<Player>().UseTpcMappingStrategy();
-            modelBuilder.Entity<Match>().UseTpcMappingStrategy();
-            modelBuilder.Entity<Group>().UseTpcMappingStrategy();
 
 
             // Owner
@@ -96,25 +94,90 @@ namespace BracketMaster.Repository
                     .IsRequired();
             });
 
-            // Group -> Players
-            modelBuilder.Entity<Group>()
-                .HasMany(g => g.Players)
-                .WithOne(p => p.Group)
-                .HasForeignKey(p => p.GroupId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Beerpong Groups
-            modelBuilder.Entity<BeerpongGroup>(entity =>
+            // Groups
+            modelBuilder.Entity<Group>(entity =>
             {
-                entity.ToTable("BeerpongGroups");
+                entity.UseTpcMappingStrategy();
 
                 entity.Property(g => g.Name)
                     .IsRequired();
 
                 entity.Property(g => g.TournamentId)
                     .IsRequired();
-                //entity.Property(x => x.)
+
+                // Group -> Players
+                entity
+                .HasMany(g => g.Players)
+                .WithOne(p => p.Group)
+                .HasForeignKey(p => p.GroupId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
+                
+
+            // Beerpong Groups
+            modelBuilder.Entity<BeerpongGroup>(entity =>
+            {
+                entity.ToTable("BeerpongGroups");
+            });
+
+
+            // Match
+            modelBuilder.Entity<Match>(entity =>
+            {
+                entity.UseTpcMappingStrategy();
+
+                entity.Property(m => m.TournamentId)
+                    .IsRequired();
+
+                entity.Property(g => g.Round)
+                    .IsRequired();
+
+                entity.Property(g => g.HomeId)
+                    .IsRequired();
+
+                entity.Property(g => g.AwayId)
+                    .IsRequired();
+
+                // Match -> Group
+                entity
+                    .HasOne(m => m.Group)
+                    .WithMany(g => g.Matches)
+                    .HasForeignKey(m => m.GroupId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Match -> HomeMatches
+                entity
+                    .HasOne(m => m.Home)
+                    .WithMany(p => p.HomeMatches)
+                    .HasForeignKey(m => m.HomeId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Match -> AwayMathes
+                entity
+                    .HasOne(m => m.Away)
+                    .WithMany(p => p.AwayMatches)
+                    .HasForeignKey(m => m.AwayId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Match -> Winner
+                entity
+                    .HasOne(m => m.Winner)
+                    .WithMany()
+                    .HasForeignKey(m => m.WinnerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+            // Beerpong Matches
+            modelBuilder.Entity<BeerpongMatch>(entity =>
+            {
+                entity.ToTable("BeerpongMatches");
+            });
+
+
+            
+
+
 
 
             // Tournament Preliminary
@@ -152,28 +215,6 @@ namespace BracketMaster.Repository
                 .HasForeignKey(g => g.TournamentId)
                 .OnDelete(DeleteBehavior.Cascade));
 
-
-
-            // Match -> Group
-            modelBuilder.Entity<Match>(x => x
-                .HasOne(m => m.Group)
-                .WithMany(g => g.Matches)
-                .HasForeignKey(m => m.GroupId)
-                .OnDelete(DeleteBehavior.Restrict));
-
-            // Match -> HomeMatches
-            modelBuilder.Entity<Match>(x => x
-                .HasOne(m => m.Home)
-                .WithMany(p => p.HomeMatches)
-                .HasForeignKey(m => m.HomeId)
-                .OnDelete(DeleteBehavior.Cascade));
-
-            // Match -> AwayMathes
-            modelBuilder.Entity<Match>(x => x
-                .HasOne(m => m.Away)
-                .WithMany(p => p.AwayMatches)
-                .HasForeignKey(m => m.AwayId)
-                .OnDelete(DeleteBehavior.Cascade));
 
             // Preliminary System
             modelBuilder.Entity<PreliminarySystem>(entity =>
