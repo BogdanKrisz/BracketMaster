@@ -96,6 +96,27 @@ namespace BracketMaster.Repository
                     .IsRequired();
             });
 
+            // Group -> Players
+            modelBuilder.Entity<Group>()
+                .HasMany(g => g.Players)
+                .WithOne(p => p.Group)
+                .HasForeignKey(p => p.GroupId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Beerpong Groups
+            modelBuilder.Entity<BeerpongGroup>(entity =>
+            {
+                entity.ToTable("BeerpongGroups");
+
+                entity.Property(g => g.Name)
+                    .IsRequired();
+
+                entity.Property(g => g.TournamentId)
+                    .IsRequired();
+                //entity.Property(x => x.)
+            });
+
+
             // Tournament Preliminary
             modelBuilder.Entity<Tournament>()
                 .HasOne(t => t.PreliminarySystem)
@@ -131,19 +152,7 @@ namespace BracketMaster.Repository
                 .HasForeignKey(g => g.TournamentId)
                 .OnDelete(DeleteBehavior.Cascade));
 
-            // Group -> Player
-            modelBuilder.Entity<Group>(x => x
-                .HasMany(g => g.Players)
-                .WithOne(p => p.Group)
-                .HasForeignKey(p => p.GroupId)
-                .OnDelete(DeleteBehavior.Restrict));
 
-            // Match -> Group
-            modelBuilder.Entity<Group>(x => x
-                .HasMany(g => g.Players)
-                .WithOne(p => p.Group)
-                .HasForeignKey(p => p.GroupId)
-                .OnDelete(DeleteBehavior.Restrict));
 
             // Match -> Group
             modelBuilder.Entity<Match>(x => x

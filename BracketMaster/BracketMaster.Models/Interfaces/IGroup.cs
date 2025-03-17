@@ -4,6 +4,6 @@
     {
         string Name { get; set; }
         Tournament? Tournament { get; set; }
-        int? TournamentId { get; set; }
+        int TournamentId { get; set; }
     }
 }

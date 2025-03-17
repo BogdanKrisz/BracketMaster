@@ -9,11 +9,12 @@ namespace BracketMaster.Models
 {
     public abstract class Group : Entity, IGroup
     {
-        public string Name { get; set; }
+        public required string Name { get; set; } = string.Empty;
+
+        public required int TournamentId { get; set; } = 0;
 
         [NotMapped]
         public virtual Tournament? Tournament { get; set; }
-        public int? TournamentId { get; set; }
 
         [NotMapped]
         public virtual ICollection<Player> Players { get; set; }
