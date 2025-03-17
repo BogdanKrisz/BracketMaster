@@ -175,6 +175,25 @@ namespace BracketMaster.Repository
                 .HasForeignKey(m => m.AwayId)
                 .OnDelete(DeleteBehavior.Cascade));
 
+            // Preliminary System
+            modelBuilder.Entity<PreliminarySystem>(entity =>
+            {
+                entity.ToTable("PreliminarySystems");
+
+                entity.Property(k => k.Name)
+                    .IsRequired();
+            });
+
+            // Knockout System
+            modelBuilder.Entity<KnockoutSystem>(entity =>
+            {
+                entity.ToTable("KnockoutSystems");
+
+                entity.Property(k => k.Name)
+                    .IsRequired();
+            });
+
+            
         }
     }
 }

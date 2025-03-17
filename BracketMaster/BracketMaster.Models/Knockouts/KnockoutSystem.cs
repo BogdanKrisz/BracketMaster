@@ -5,11 +5,9 @@ using System.Text;
 
 namespace BracketMaster.Models
 {
-    [Table("KnockoutSystems")]
     public class KnockoutSystem : Entity
     {
-        [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; } = string.Empty;
 
         public string? Description { get; set; }
     }
