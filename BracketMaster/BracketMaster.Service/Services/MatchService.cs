@@ -38,6 +38,8 @@ namespace BracketMaster.Service
             SetResult(match.Id, homeScore, awayScore);
         }
 
+        // Módosításnál és törlésnél is kell majd átszámolni valahogy
+        // Lehet hogy egyébként 0ról fogom mindig kiszámoltatni az összes meccs alapján, bár ez költséges úgyh lehet mégsem
         // átírhatnám linq-ra, mert lazy loadingból átszedni a dolgokat lassú lesz overtime
         public void SetResult(int matchId, int homeScore, int awayScore)
         {

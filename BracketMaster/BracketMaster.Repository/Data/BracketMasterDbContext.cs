@@ -40,11 +40,6 @@ namespace BracketMaster.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // TCP Mapping beállítása az osztályokra -> minden leszármazottnak saját táblája van
-            modelBuilder.Entity<Tournament>().UseTpcMappingStrategy();
-            modelBuilder.Entity<Player>().UseTpcMappingStrategy();
-
-
             // Owner
             modelBuilder.Entity<Owner>(entity => 
             {
@@ -101,6 +96,9 @@ namespace BracketMaster.Repository
                 entity.UseTpcMappingStrategy();
 
                 entity.Property(g => g.Name)
+                    .IsRequired();
+
+                entity.Property(g => g.MatchesPerPlayer)
                     .IsRequired();
 
                 entity.Property(g => g.TournamentId)
@@ -178,6 +176,29 @@ namespace BracketMaster.Repository
             // Tournament
             modelBuilder.Entity<Tournament>(entity =>
             {
+                entity.UseTpcMappingStrategy();
+
+                entity.Property(t => t.Name)
+                    .IsRequired();
+
+                entity.Property(t => t.NumOfTables)
+                    .IsRequired();
+
+                entity.Property(t => t.OwnerId)
+                    .IsRequired();
+
+                entity.Property(t => t.PreliminarySystemId)
+                    .IsRequired();
+
+                entity.Property(t => t.KnockoutSystemId)
+                    .IsRequired();
+
+                entity.Property(t => t.PointsForWin)
+                    .IsRequired();
+
+                entity.Property(t => t.PointsForLose)
+                    .IsRequired();
+
                 // Tournament -> Preliminary
                 entity
                     .HasOne(t => t.PreliminarySystem)
@@ -227,6 +248,23 @@ namespace BracketMaster.Repository
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
+            // Players
+            modelBuilder.Entity<Player>(entity =>
+            {
+                entity.UseTpcMappingStrategy();
+
+                entity.Property(p => p.Name)
+                    .IsRequired();
+
+                entity.Property(p => p.TournamentId)
+                    .IsRequired();
+            });
+
+            // Beerpong Players
+            modelBuilder.Entity<BeerpongPlayer>(entity =>
+            {
+                entity.ToTable("BeerpongPlayers");
+            });
 
             // Beerpong Overtime Type
             modelBuilder.Entity<BeerpongOvertimeType>(entity =>
