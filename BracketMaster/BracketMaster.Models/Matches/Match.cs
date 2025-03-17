@@ -9,42 +9,33 @@ namespace BracketMaster.Models
 {
     public abstract class Match : Entity, IMatch
     {
-        public required int TournamentId { get; set; } = 0;
-
         [NotMapped]
         public virtual Tournament? Tournament { get; set; }
-        
+        public required int TournamentId { get; set; } = 0;
 
         // number of round 
         public required int Round { get; set; } = 0;
 
-
+        [NotMapped]
+        public virtual Player? Home { get; set; }
         public required int HomeId { get; set; } = 0;
 
         [NotMapped]
-        public virtual Player? Home { get; set; }
-
-
-        public required int AwayId { get; set; } = 0;
-
-        [NotMapped]
         public virtual Player? Away { get; set; }
-
+        public required int AwayId { get; set; } = 0;
 
         public int HomeScore { get; set; } = 0;
         public int AwayScore { get; set; } = 0;
 
         public virtual bool IsFinished { get; }
-        
-        public int? WinnerId { get; set; }
 
         [NotMapped]
         public virtual Player? Winner { get; set; }
-
-        public int? GroupId { get; set; }
+        public int? WinnerId { get; set; }
 
         [NotMapped]
         public virtual Group? Group { get; set; }
+        public int? GroupId { get; set; }
 
         protected Match() { }
 

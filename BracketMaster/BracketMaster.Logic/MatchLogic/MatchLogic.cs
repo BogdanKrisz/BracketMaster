@@ -8,14 +8,20 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Logic
 {
-    public abstract class MatchLogic<T> : IMatchLogic<T> where T : Match
+    public abstract class MatchLogic<M, P> : IMatchLogic<M, P>
+        where M : Match
+        where P : Player
     {
         protected MatchLogic()
         {
 
         }
 
-        public virtual void Validate(T item)
+        public abstract P AddPointsToPlayer(M match, P player);
+
+        public abstract int CountMatchPoints(M m, P p);
+
+        public virtual void Validate(M item)
         {
             
         }

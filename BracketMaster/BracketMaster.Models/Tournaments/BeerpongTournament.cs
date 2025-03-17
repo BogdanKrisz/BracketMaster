@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("Beerpong_Tournaments")]
     public class BeerpongTournament : Tournament, IBeerpongTournament
     {
-        public int PointsForOverTimeWin { get; set; }
-        public int PointsForOverTimeLose { get; set; }
+        [NotMapped]
+        public virtual BeerpongOvertimeType? BeerpongOvertimeType { get; set; }
+        public required int BeerpongOvertimeTypeId { get; set; }
+
+        public int? PointsForOverTimeWin { get; set; }
+        public int? PointsForOverTimeLose { get; set; }
 
         public override ICollection<Player> Ranking
         {

@@ -8,7 +8,9 @@ namespace BracketMaster.Models
 {
     public interface IBeerpongTournament
     {
-        int PointsForOverTimeWin { get; set; }
-        int PointsForOverTimeLose { get; set; }
+        BeerpongOvertimeType? BeerpongOvertimeType { get; set; }
+        int BeerpongOvertimeTypeId { get; set; }
+        int? PointsForOverTimeWin { get; set; }
+        int? PointsForOverTimeLose { get; set; }
     }
 }

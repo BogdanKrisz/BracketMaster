@@ -30,6 +30,16 @@ namespace BracketMaster.Repository
                 );
             }
 
+            if (!ctx.BeerpongOvertimeTypes.Any())
+            {
+                ctx.BeerpongOvertimeTypes.AddRange(
+                    new Models.BeerpongOvertimeType { Name = "None", Description = "No possibility for overtime, the game goes until sudden death." },
+                    new Models.BeerpongOvertimeType { Name = "Basic", Description = "After the game, regardless the number of overtimes, the cup difference will be added to the winner and subtracted from the loser." },
+                    new Models.BeerpongOvertimeType { Name = "BPBL", Description = "After overtime happens, regardless of the result, noone wins or loses cups." },
+                    new Models.BeerpongOvertimeType { Name = "ESOBP", Description = "When the teams reached the second over time (16hits for someone) the cup difference will be only 1 no matter of the result." }
+                );
+            }
+
             ctx.SaveChanges();
         }
     }

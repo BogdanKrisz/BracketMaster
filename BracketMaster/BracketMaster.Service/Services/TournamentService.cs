@@ -18,9 +18,9 @@ namespace BracketMaster.Service
         readonly ITournamentRepository<T> _tournamentRepository;
         readonly ITournamentLogic<T> _tournamentLogic;
 
-        readonly IPlayerService<P, G, M> _playerService;
+        readonly IPlayerService<P> _playerService;
         readonly IGroupService<G> _groupService;
-        readonly IMatchService<M> _matchService;
+        readonly IMatchService<M, P, G> _matchService;
 
         readonly KnockoutHandlerFactory _knockoutHandlerFactory;
         readonly PreliminaryHandlerFactory _preliminaryHandlerFactory;
@@ -28,9 +28,9 @@ namespace BracketMaster.Service
         public TournamentService(
             ITournamentRepository<T> tournamentRepository, 
             ITournamentLogic<T> tournamentLogic, 
-            IPlayerService<P, G, M> playerService, 
+            IPlayerService<P> playerService, 
             IGroupService<G> groupService, 
-            IMatchService<M> matchService, 
+            IMatchService<M, P, G> matchService, 
             KnockoutHandlerFactory knockoutHandlerFactory, 
             PreliminaryHandlerFactory preliminaryHandlerFactory)
         {
@@ -126,6 +126,33 @@ namespace BracketMaster.Service
 
         // jó lenne ha a játékosok is láthatnák a bajnokságot meg a rendszert, csak ne írhassanak bele nyilván (de ez frontend story lesz)
 
+
+        // bajnokság készítés form lehetőségek:
+        // torna neve
+
+        // ÚJ !! - hány asztal van
+
+        // preliminary
+        // ko rendszer
+
+        // RoundRobin -> fix mindenki mindenkivel (opció lehessen, hogy hányszor)
+        // RandomEnemy, Swiss -> hány körös legyen (kezdés előtt legyen átírható)
+        // Groups -> ez majd ugye később aktuális (ha pl van 5fős, akkor ők hányszor egymás ellen oda vissza, ha van 4fős akkor náluk hány, 2fősnél hány stbstb)
+
+
+        // Prelim indításakor legyen lehetőség választani, hogy hány db group legyen és hány fősök legyenek és ki hányszor játszon egymással (és írja mellette, hogy ez mennyi meccset eredményezne a csoportban)
+        // KO indításakor kellene egy kérdés, hogy hányan jussanak tovább (inkább egy felület szerű, mint prelim indításnál ha groups)
+
+
+        // sörpongnál specifikus ->  van-e OT?
+        // Ha van OT, akkor 0 poharat kapnak a csapatok
+        // Ha 2 OT van, akkor a nyertes 1poharat, a vesztes -1 poharat
+        // Ha van OT akkor is amennyivel nyersz annyival + / - pohár
+
+        // írja ki a rendszer, hogy hány meccsel számolhat a szervező összesen
+        // írja ki a rendszer, hogy hány körrel számolhatnak
+        // írja ki, hogy ez kb mennyi idő lehet?
+
         #region NON-CRUD
 
         #region Tournament
@@ -213,8 +240,8 @@ namespace BracketMaster.Service
             // itt a start tournamentből a preliminaryServicebe át -> és indítani az új köröket (előre megkéne határozni a körök számát, ha 0 akkor meg manuálisan kövi kör indítás)
 
 
-            // fontos lenne!!! -> Groups preliminarynál választási lehetőség
-            // előre meghatározott (A1 vs D2 ...) vagy rangsor ott is 
+            // fontos lenne!!! -> Groups preliminarynál választási lehetőség -> kéne egy külön felület / logika a csoportok kialakítására
+            // van-e elég player? (min. 2)
             try
             {
                 // get tournament

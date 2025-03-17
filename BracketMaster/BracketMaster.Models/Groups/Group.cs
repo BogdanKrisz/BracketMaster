@@ -11,10 +11,11 @@ namespace BracketMaster.Models
     {
         public required string Name { get; set; } = string.Empty;
 
-        public required int TournamentId { get; set; } = 0;
+        public required int MatchesPerPlayer { get; set; } = 0;
 
         [NotMapped]
         public virtual Tournament? Tournament { get; set; }
+        public required int TournamentId { get; set; } = 0;
 
         [NotMapped]
         public virtual ICollection<Player> Players { get; set; }

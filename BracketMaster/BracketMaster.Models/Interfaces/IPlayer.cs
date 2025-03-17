@@ -7,11 +7,14 @@ namespace BracketMaster.Models
         string Name { get; set; }
 
         Tournament? Tournament { get; set; }
-        int? TournamentId { get; set; }
+        int TournamentId { get; set; }
 
-        ICollection<Match> HomeMatches { get; set; }
-        ICollection<Match> AwayMatches { get; set; }
-        ICollection<Player> PreviousOpponents { get; }
+        Group? Group { get; set; }
+        int? GroupId { get; set; }
+
+        ICollection<Match>? HomeMatches { get; set; }
+        ICollection<Match>? AwayMatches { get; set; }
+        ICollection<Player>? PreviousOpponents { get; }
 
         int Points { get; }
     }

@@ -16,10 +16,10 @@ namespace BracketMaster.Models
         public required DateTime Expiration { get; set; } = DateTime.UtcNow;
 
         [JsonIgnore]
-        public int? OwnerId { get; set; }
-
-        [JsonIgnore]
         [NotMapped]
         public virtual Owner? Owner { get; set; }
+
+        [JsonIgnore]
+        public int? OwnerId { get; set; }
     }
 }

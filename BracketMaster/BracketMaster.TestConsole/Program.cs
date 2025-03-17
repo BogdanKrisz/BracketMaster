@@ -27,7 +27,7 @@ namespace BracketMaster.TestConsole
                 // Logics
                 .AddScoped<ITournamentLogic<BeerpongTournament>, BeerpongTournamentLogic>()
                 .AddScoped<IPlayerLogic<BeerpongPlayer>, BeerpongPlayerLogic>()
-                .AddScoped<IMatchLogic<BeerpongMatch>, BeerpongMatchLogic>()
+                .AddScoped<IMatchLogic<BeerpongMatch, BeerpongPlayer>, BeerpongMatchLogic>()
                 .AddScoped<IGroupLogic<BeerpongGroup>, BeerpongGroupLogic>()
                 .AddScoped<IAuthLogic, AuthLogic>()
                 .AddScoped<IPasswordHasher, PasswordHasher>()
@@ -51,8 +51,8 @@ namespace BracketMaster.TestConsole
                 // Services
 
                 .AddScoped(typeof(ITournamentService<,,,>), typeof(TournamentService<,,,>))
-                .AddScoped(typeof(IPlayerService<,,>), typeof(PlayerService<,,>))
-                .AddScoped(typeof(IMatchService<>), typeof(MatchService<>))
+                .AddScoped(typeof(IPlayerService<>), typeof(PlayerService<>))
+                .AddScoped(typeof(IMatchService<,,>), typeof(MatchService<,,>))
                 .AddScoped(typeof(IGroupService<>), typeof(GroupService<>))
                 .AddScoped<IAuthService<Owner>, AuthService>()
 
@@ -63,8 +63,8 @@ namespace BracketMaster.TestConsole
                 .BuildServiceProvider();
 
             var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament,BeerpongPlayer,BeerpongGroup,BeerpongMatch>>();
-            var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer,BeerpongGroup,BeerpongMatch>>();
-            var matchService = serviceProvider.GetRequiredService<IMatchService<BeerpongMatch>>();
+            var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer>>();
+            var matchService = serviceProvider.GetRequiredService<IMatchService<BeerpongMatch, BeerpongPlayer, BeerpongGroup>>();
             var authService = serviceProvider.GetRequiredService<IAuthService<Owner>>();
 
             // initialize db data
@@ -83,7 +83,10 @@ namespace BracketMaster.TestConsole
                 PointsForWin = 3,
                 PointsForOverTimeWin = 2,
                 PointsForOverTimeLose = 1,
-                PointsForLose = 0
+                PointsForLose = 0,
+                BeerpongOvertimeTypeId = 2,
+                GroupAdvancement = true,
+                NumOfTables = 4
             };
 
             bpService.Create(t1);
@@ -91,21 +94,25 @@ namespace BracketMaster.TestConsole
             // új player
             BeerpongPlayer p1 = new BeerpongPlayer()
             {
+                TournamentId = 1,
                 Name = "Krisz"
             };
 
             BeerpongPlayer p2 = new BeerpongPlayer()
             {
+                TournamentId = 1,
                 Name = "Erik"
             };
 
             BeerpongPlayer p3 = new BeerpongPlayer()
             {
+                TournamentId = 1,
                 Name = "Roló"
             };
 
             BeerpongPlayer p4 = new BeerpongPlayer()
             {
+                TournamentId = 1,
                 Name = "Szonja"
             };
 
@@ -119,8 +126,8 @@ namespace BracketMaster.TestConsole
             bpService.AddPlayerToTournament(1, 3);
             bpService.AddPlayerToTournament(1, 4);
 
-            BeerpongGroup bpG1 = new BeerpongGroup() { Name = "A csoport", TournamentId = 1 };
-            BeerpongGroup bpG2 = new BeerpongGroup() { Name = "B csoport", TournamentId = 1 };
+            BeerpongGroup bpG1 = new BeerpongGroup() { Name = "A csoport", TournamentId = 1, MatchesPerPlayer = 2 };
+            BeerpongGroup bpG2 = new BeerpongGroup() { Name = "B csoport", TournamentId = 1, MatchesPerPlayer = 2 };
 
             bpService.CreateGroup(bpG1);
             bpService.CreateGroup(bpG2);
@@ -132,13 +139,13 @@ namespace BracketMaster.TestConsole
             bpService.AddPlayerToGroup(2, 4);
 
             bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 1, AwayId = 2, Round = 1 });
-            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 3, AwayId = 4, Round = 1});
+            bpService.CreateMatch(new BeerpongMatch() { TournamentId = 1, HomeId = 3, AwayId = 4, Round = 1 });
 
             bpService.AddMatchToTournament(1, 1);
             bpService.AddMatchToTournament(1, 2);
 
             matchService.SetResult(1, 10, 8);
-            matchService.SetResult(2, 18, 19);
+            matchService.SetResult(2, 16, 19);
 
             bpService.RemovePlayerFromTournament(1);
             bpService.RemovePlayerFromTournament(2);

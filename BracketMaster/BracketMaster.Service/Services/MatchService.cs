@@ -9,15 +9,21 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public class MatchService<T> : IMatchService<T> where T : Match
+    public class MatchService<M, P, G> : IMatchService<M, P, G> 
+        where M : Match
+        where P : Player
+        where G : Group
     {
-        readonly IMatchRepository<T> _matchRepository;
-        readonly IMatchLogic<T> _matchLogic;
+        readonly IMatchRepository<M> _matchRepository;
+        readonly IMatchLogic<M, P> _matchLogic;
 
-        public MatchService(IMatchRepository<T> matchRepository, IMatchLogic<T> matchLogic)
+        readonly IPlayerService<P> _playerService;
+
+        public MatchService(IMatchRepository<M> matchRepository, IMatchLogic<M, P> matchLogic, IPlayerService<P> playerService)
         {
             _matchRepository = matchRepository;
             _matchLogic = matchLogic;
+            _playerService = playerService;
         }
 
 
@@ -32,6 +38,7 @@ namespace BracketMaster.Service
             SetResult(match.Id, homeScore, awayScore);
         }
 
+        // átírhatnám linq-ra, mert lazy loadingból átszedni a dolgokat lassú lesz overtime
         public void SetResult(int matchId, int homeScore, int awayScore)
         {
             var match = _matchRepository.Read(matchId);
@@ -39,9 +46,18 @@ namespace BracketMaster.Service
 
             match.SetResult(homeScore, awayScore);
             _matchRepository.Update(match);
+
+            var homePlayer = match.Home as P;
+            var awayPlayer = match.Away as P;
+
+            var homePlayerResult = _matchLogic.AddPointsToPlayer(match, homePlayer);
+            var awayPlayerResult = _matchLogic.AddPointsToPlayer(match, awayPlayer);
+
+            _playerService.Update(homePlayerResult);
+            _playerService.Update(awayPlayerResult);
         }
 
-        public void Create(T item)
+        public void Create(M item)
         {
             try
             {
@@ -67,7 +83,7 @@ namespace BracketMaster.Service
             }
         }
 
-        public T Read(int id)
+        public M Read(int id)
         {
             try
             {
@@ -79,7 +95,7 @@ namespace BracketMaster.Service
             }
         }
 
-        public IQueryable<T> ReadAll()
+        public IQueryable<M> ReadAll()
         {
             try
             {
@@ -91,7 +107,7 @@ namespace BracketMaster.Service
             }
         }
 
-        public void Update(T item)
+        public void Update(M item)
         {
             try
             {

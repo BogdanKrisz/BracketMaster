@@ -8,10 +8,7 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public interface IPlayerService<T, G, M> : IBasicService<T> 
-        where T : Player
-        where G : Group
-        where M : Match
+    public interface IPlayerService<P> : IBasicService<P> where P : Player
     {
     }
 }

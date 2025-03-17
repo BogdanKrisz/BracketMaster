@@ -9,32 +9,23 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Service
 {
-    public class PlayerService<T, G, M> : IPlayerService<T, G, M>
-        where T : Player
-        where G : Group
-        where M : Match
+    public class PlayerService<P> : IPlayerService<P>
+        where P : Player
     {
-        readonly IPlayerRepository<T> _playerRepository;
-        readonly IPlayerLogic<T> _playerLogic;
-
-        readonly IGroupService<G> _groupService;
-        readonly IMatchService<M> _matchService;
+        readonly IPlayerRepository<P> _playerRepository;
+        readonly IPlayerLogic<P> _playerLogic;
 
         public PlayerService(
-            IPlayerRepository<T> playerRepository,
-            IPlayerLogic<T> playerLogic,
-            IGroupService<G> groupService,
-            IMatchService<M> matchService)
+            IPlayerRepository<P> playerRepository,
+            IPlayerLogic<P> playerLogic)
         {
             _playerRepository = playerRepository;
             _playerLogic = playerLogic;
-            _matchService = matchService;
-            _groupService = groupService;
         }
 
 
 
-        public void Create(T item)
+        public void Create(P item)
         {
             try
             {
@@ -59,7 +50,7 @@ namespace BracketMaster.Service
             }
         }
 
-        public T Read(int id)
+        public P Read(int id)
         {
             try
             {
@@ -71,7 +62,7 @@ namespace BracketMaster.Service
             }
         }
 
-        public IQueryable<T> ReadAll()
+        public IQueryable<P> ReadAll()
         {
             try
             {
@@ -83,7 +74,7 @@ namespace BracketMaster.Service
             }
         }
 
-        public void Update(T item)
+        public void Update(P item)
         {
             try
             {

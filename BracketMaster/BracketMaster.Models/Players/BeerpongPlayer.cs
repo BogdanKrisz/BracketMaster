@@ -12,93 +12,12 @@ namespace BracketMaster.Models
     [Table("Beerpong_Players")]
     public class BeerpongPlayer : Player, IBeerpongPlayer
     {
-        public override int Points 
-        { 
-            get
-            {
-                int result = 0;
-                foreach (var match in HomeMatches)
-                {
-                    result += countMatchPoints(match as BeerpongMatch);
-                }
-                foreach (var match in AwayMatches)
-                {
-                    result += countMatchPoints(match as BeerpongMatch);
-                }
-                return result;
-            } 
-        }
-
-        public int Cups
-        {
-            get
-            {
-                int result = 0;
-                foreach (var match in HomeMatches)
-                {
-                    result += getMatchCups(match as BeerpongMatch);
-                }
-                foreach (var match in AwayMatches)
-                {
-                    result += getMatchCups(match as BeerpongMatch);
-                }
-                return result;
-            }
-        }
+        public int Cups { get; set; } = 0;
 
         public BeerpongPlayer()
         {
             HomeMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());
             AwayMatches = new HashSet<Match>(new HashSet<BeerpongMatch>());
-        }
-
-        int countMatchPoints(BeerpongMatch m)
-        {
-            BeerpongTournament t = this.Tournament as BeerpongTournament;
-            if (!m.IsFinished)
-            {
-                // game not finished
-                return 0;
-            }
-            else if (m.WinnerId != this.Id && m.IsOverTime)
-            {
-                // overtime lose
-                return t.PointsForOverTimeLose;
-            }
-            else if (m.WinnerId != this.Id)
-            {
-                // lose
-                return t.PointsForLose;
-            }
-            else if (m.WinnerId == this.Id && m.IsOverTime)
-            {
-                // overtime win
-                return t.PointsForOverTimeWin;
-            }
-            else
-            {
-                // win
-                return t.PointsForWin;
-            }
-        }
-
-        int getMatchCups(BeerpongMatch m)
-        {
-            if (!m.IsFinished)
-            {
-                // game not finished
-                return 0;
-            }
-            else if(m.WinnerId != this.Id)
-            {
-                // lost
-                return m.CupDifference * -1;
-            }
-            else
-            {
-                // won
-                return m.CupDifference;
-            }
         }
 
         public override int CompareTo(Player? other)

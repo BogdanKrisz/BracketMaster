@@ -13,6 +13,7 @@ namespace BracketMaster.Repository
         public DbSet<Owner> Owners { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
+        public DbSet<BeerpongOvertimeType> BeerpongOvertimeTypes { get; set; }
         public DbSet<PreliminarySystem> PreliminarySystems { get; set; }
         public DbSet<KnockoutSystem> KnockoutSystems { get; set; }
 
@@ -174,47 +175,67 @@ namespace BracketMaster.Repository
                 entity.ToTable("BeerpongMatches");
             });
 
+            // Tournament
+            modelBuilder.Entity<Tournament>(entity =>
+            {
+                // Tournament -> Preliminary
+                entity
+                    .HasOne(t => t.PreliminarySystem)
+                    .WithMany()
+                    .HasForeignKey(t => t.PreliminarySystemId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            
+                // Tournament -> Knockout
+                entity
+                    .HasOne(t => t.KnockoutSystem)
+                    .WithMany()
+                    .HasForeignKey(t => t.KnockoutSystemId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Tournament -> Matches
+                entity
+                    .HasMany(t => t.Matches)
+                    .WithOne(m => m.Tournament)
+                    .HasForeignKey(m => m.TournamentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Tournament -> Players
+                entity
+                    .HasMany(t => t.Players)
+                    .WithOne(p => p.Tournament)
+                    .HasForeignKey(p => p.TournamentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Tournament -> Groups
+                entity
+                    .HasMany(t => t.Groups)
+                    .WithOne(g => g.Tournament)
+                    .HasForeignKey(g => g.TournamentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Beerpong Tournament
+            modelBuilder.Entity<BeerpongTournament>(entity =>
+            {
+                entity.ToTable("BeerpongTournaments");
+
+                // Tournament -> BeerpongTournamentOvertimeType
+                entity 
+                    .HasOne(t => t.BeerpongOvertimeType)
+                    .WithMany()
+                    .HasForeignKey(t => t.BeerpongOvertimeTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
 
+            // Beerpong Overtime Type
+            modelBuilder.Entity<BeerpongOvertimeType>(entity =>
+            {
+                entity.ToTable("BeerpongOvertimeTypes");
 
-
-            // Tournament Preliminary
-            modelBuilder.Entity<Tournament>()
-                .HasOne(t => t.PreliminarySystem)
-                .WithMany()
-                .HasForeignKey(t => t.PreliminarySystemId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Tournament Knockout
-            modelBuilder.Entity<Tournament>()
-                .HasOne(t => t.KnockoutSystem)
-                .WithMany()                         // Ha egy KnockoutSystem-et több torna is használhat
-                .HasForeignKey(t => t.KnockoutSystemId)
-                .OnDelete(DeleteBehavior.Restrict); // Ne törölje a KnockoutSystem-et, ha van rá hivatkozás
-
-            // Tournament -> Matches
-            modelBuilder.Entity<Tournament>(x => x
-                .HasMany(t => t.Matches)
-                .WithOne(m => m.Tournament)
-                .HasForeignKey(m => m.TournamentId)
-                .OnDelete(DeleteBehavior.Cascade));
-
-            // Tournament -> Player
-            modelBuilder.Entity<Tournament>(x => x
-                .HasMany(t => t.Players)
-                .WithOne(p => p.Tournament)
-                .HasForeignKey(p => p.TournamentId)
-                .OnDelete(DeleteBehavior.Cascade));
-
-            // Tournament -> Groups
-            modelBuilder.Entity<Tournament>(x => x
-                .HasMany(t => t.Groups)
-                .WithOne(g => g.Tournament)
-                .HasForeignKey(g => g.TournamentId)
-                .OnDelete(DeleteBehavior.Cascade));
-
+                entity.Property(k => k.Name)
+                    .IsRequired();
+            });
 
             // Preliminary System
             modelBuilder.Entity<PreliminarySystem>(entity =>
@@ -233,8 +254,6 @@ namespace BracketMaster.Repository
                 entity.Property(k => k.Name)
                     .IsRequired();
             });
-
-            
         }
     }
 }
