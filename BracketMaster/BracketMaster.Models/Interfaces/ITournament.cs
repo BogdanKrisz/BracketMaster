@@ -5,6 +5,9 @@ namespace BracketMaster.Models
     {
         string Name { get; set; }
 
+        Owner? Owner { get; set; }
+        int? OwnerId { get; set; }
+
         ICollection<Match> Matches { get; set; } 
         ICollection<Player> Players { get; set; }
         ICollection<Player> Ranking { get; }

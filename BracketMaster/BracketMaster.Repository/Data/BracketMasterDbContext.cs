@@ -46,16 +46,17 @@ namespace BracketMaster.Repository
             modelBuilder.Entity<Group>().UseTpcMappingStrategy();
 
 
-            // Owner beállítása
+            // Owner
             modelBuilder.Entity<Owner>(entity => 
             {
+                entity.ToTable("Owners");
+
                 entity.Property(o => o.Username)
                     .IsRequired()
                     .HasMaxLength(256);
 
                 entity.Property(o => o.PasswordHashed)
-                    .IsRequired()
-                    .HasMaxLength(88);
+                    .IsRequired();
 
                 entity.Property(o => o.PasswordSalt)
                     .IsRequired()
@@ -66,8 +67,7 @@ namespace BracketMaster.Repository
                     .HasMaxLength(6);
 
                 entity.Property(o => o.Email)
-                    .IsRequired()
-                    .HasMaxLength(256);
+                    .IsRequired();
 
                 // owner -> refreshToken
                 entity
@@ -84,21 +84,15 @@ namespace BracketMaster.Repository
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            // RefreshToken
             modelBuilder.Entity<RefreshToken>(entity =>
             {
+                entity.ToTable("RefreshTokens");
+
                 entity.Property(r => r.Token)
                     .IsRequired();
 
                 entity.Property(rt => rt.Expiration)
-                    .IsRequired();
-            });
-
-            modelBuilder.Entity<RefreshTokenRequest>(entity =>
-            {
-                entity.Property(r => r.Token)
-                    .IsRequired();
-
-                entity.Property(r => r.RefreshToken)
                     .IsRequired();
             });
 

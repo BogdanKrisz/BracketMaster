@@ -109,6 +109,9 @@ namespace BracketMaster.Service
 
         #endregion
 
+        // TOVÁBB fluent API
+        // !! valahol a tournament készítésnél beleakad a kapcsolatokba a story
+
         // átkéne írni a data annotations-t Fluent API -ra az onmodelcreatingbe
         // logic rétegbe átszervezések (auth és token rendszer marad serviceben)
         // esetleg logicoknak egy közös interfész amelyben pl a validate-t kötelezővé tesszük

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("RefreshTokens")]
     public class RefreshToken : Entity, IRefreshToken
     {
         public required string Token { get; set; } = string.Empty;

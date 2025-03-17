@@ -54,6 +54,7 @@ namespace BracketMaster.TestConsole
                 .AddScoped(typeof(IPlayerService<,,>), typeof(PlayerService<,,>))
                 .AddScoped(typeof(IMatchService<>), typeof(MatchService<>))
                 .AddScoped(typeof(IGroupService<>), typeof(GroupService<>))
+                .AddScoped<IAuthService<Owner>, AuthService>()
 
                 // tokenService
                 //.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
@@ -64,14 +65,18 @@ namespace BracketMaster.TestConsole
             var bpService = serviceProvider.GetRequiredService<ITournamentService<BeerpongTournament,BeerpongPlayer,BeerpongGroup,BeerpongMatch>>();
             var pService = serviceProvider.GetRequiredService<IPlayerService<BeerpongPlayer,BeerpongGroup,BeerpongMatch>>();
             var matchService = serviceProvider.GetRequiredService<IMatchService<BeerpongMatch>>();
+            var authService = serviceProvider.GetRequiredService<IAuthService<Owner>>();
 
             // initialize db data
             var ctx = serviceProvider.GetRequiredService<BracketMasterDbContext>();
             DbInitializer.Initialize(ctx);
 
+            authService.RegisterOwner(new RegisterModel { Username = "KriszOwner", Email = "proba@gmail.com", Password = "Jelszo" });
+
             // új bajnokság
             BeerpongTournament t1 = new BeerpongTournament()
             {
+                OwnerId = 1,
                 Name = "Elite PreSeason #2",
                 KnockoutSystemId = 1,
                 PreliminarySystemId = 1,

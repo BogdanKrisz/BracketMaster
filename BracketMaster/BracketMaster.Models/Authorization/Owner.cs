@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace BracketMaster.Models
 {
-    [Table("Owners")]
     public class Owner : Entity, IOwner
     {
         public required string Username { get; set; } = string.Empty;
@@ -33,7 +32,7 @@ namespace BracketMaster.Models
         public virtual RefreshToken? RefreshToken { get; set; }
 
         [NotMapped]
-        public ICollection<Tournament> Tournaments { get; set; }
+        public virtual ICollection<Tournament> Tournaments { get; set; }
 
         public Owner()
         {
